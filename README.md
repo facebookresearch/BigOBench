@@ -1,12 +1,12 @@
 <h1 align="center">
     <!-- <p><b><i>BigO(Bench)</b></i></p> -->
-    <img style="width: 500px" src="./docs/images/logo.png" alt="logo">
+    <img style="width: 500px" src="./docs/images/logo_transparent.png" alt="logo">
 </h1>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://facebookresearch.github.io/bigobench" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="HomePage" src="https://img.shields.io/badge/🏡%20HomePage-BigOBench-green" style="display: inline-block; vertical-align: middle;"/></a>
-  <a href="https://facebookresearch.github.io/bigobench/leaderboard.html" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="Leaderboard" src="https://img.shields.io/badge/🏆%20Leaderboard-BigOBench-yellow" style="display: inline-block; vertical-align: middle;"/></a>
-  <a href="https://facebookresearch.github.io/bigobench/demo.html" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="Explorer" src="https://img.shields.io/badge/🔎%20Explorer-BigOBench-white" style="display: inline-block; vertical-align: middle;"/></a>
+  <a href="https://facebookresearch.github.io/BigOBench" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="HomePage" src="https://img.shields.io/badge/🏡%20HomePage-BigOBench-green" style="display: inline-block; vertical-align: middle;"/></a>
+  <a href="https://facebookresearch.github.io/BigOBench/leaderboard.html" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="Leaderboard" src="https://img.shields.io/badge/🏆%20Leaderboard-BigOBench-yellow" style="display: inline-block; vertical-align: middle;"/></a>
+  <a href="https://facebookresearch.github.io/BigOBench/demo.html" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="Explorer" src="https://img.shields.io/badge/🔎%20Explorer-BigOBench-white" style="display: inline-block; vertical-align: middle;"/></a>
 </div>
 <div align="center" style="line-height: 1;">
   <a href="https://github.com/facebookresearch/BigOBench" target="_blank" style="margin: 2px; text-decoration: none !important;"><img alt="Github" src="https://img.shields.io/badge/Github-facebookresearch/BigOBench-black?logo=github" style="display: inline-block; vertical-align: middle;"/></a>
