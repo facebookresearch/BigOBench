@@ -1,0 +1,84 @@
+### Linux ###
+*~
+
+### macOS ###
+# General
+.DS_Store
+
+# dotenv environment variables file
+.env
+.env.test
+.env*.local
+
+.cache
+.vscode/
+.vscode
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environments
+.venv
+#env/
+venv/
+#ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+.mypy_cache
+
+# projet specific
+# results_*
+*.zip
+sweeps_*
+xldumps*
+logs*
+*.out
+*.tar
+TO_DELETE/
+data/*
+data/*.jsonl
+!data/example_input_format_1.jsonl
+!data/example_input_format_2.jsonl
+!data/README.md
+src/eval/results/*
+src/complexity/results/*
+src/eval/results/
+src/complexity/results/

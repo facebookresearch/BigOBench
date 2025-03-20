@@ -1,0 +1,906 @@
+<!doctype html>
+
+<!-- Copyright (c) Meta Platforms, Inc. and affiliates. -->
+<!-- All rights reserved. -->
+<!-- This source code is licensed under the license found in the LICENSE file in the root directory of this source tree. -->
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="CRUXEval Leaderboard: evaluating the code reasoning, understanding, and execution abilities of code LMs">
+  <meta name="keywords" content="code, LLM, code generation, program synthesis">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes, user-scalable=yes"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BigO(Bench) Leaderboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+
+  <link rel="shortcut icon" href="./images/icon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs-bibtex@2.1.0/prism-bibtex.min.js"></script>
+
+
+
+  <style>
+    body {
+      font-family: "JetBrains Mono", monospace;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    #content {
+      width: 75%;
+    }
+
+    th,
+    td {
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #notes {
+      font-size: 1em;
+    }
+
+    #notes h3 {
+      margin-top: 1em;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    #notes li {
+      font-size: 1.2em;
+      font-weight: 300;
+      margin: 1em;
+    }
+
+    .form-select {
+      font-size: 1em;
+    }
+
+    @media screen and (max-width: 1400px) {
+      body {
+        font-size: 1.6vw;
+      }
+
+      #content {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      h2 {
+        font-size: 1.6em;
+      }
+
+      h3 {
+        font-size: 1.2em;
+      }
+
+      table {
+        font-size: small;
+      }
+    }
+
+    @media screen and (max-width: 450px) {
+      table {
+        font-size: x-small;
+      }
+    }
+
+    .publication-title {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #ffffff;
+      color: #000000;
+      padding-top: 20px;
+      font-size: 40px;
+    }
+
+    @media screen and (max-width: 550px) {
+      .publication-title {
+        font-size: 30px;
+      }
+    }
+
+    .grid-container .btn-check {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      pointer-events: none;
+    }
+
+    .grid-container .btn-check:checked+.btn-outline-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      color: white;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto repeat(3, 1fr);
+      gap: 0px;
+      row-gap: 0px;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .grid-header {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .grid-label {
+      font-weight: bold;
+      margin-right: 10px;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    .grid-container .btn-group {
+      display: flex;
+      justify-content: stretch;
+      margin-top: 0;
+      margin-bottom: 0;
+      width: 100%;
+      /* Ensure the button group takes full width */
+    }
+
+    .grid-container .btn {
+      flex-grow: 1;
+      white-space: normal;
+      /* Allow text to wrap */
+      width: 100%;
+      /* Ensure each button takes full width of its container */
+      height: auto;
+      border-radius: 0;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    .grid-container .btn-group:nth-last-child(7) .btn {
+      border-top-left-radius: 0.5rem;
+    }
+
+    .grid-container .btn-group:nth-last-child(5) .btn {
+      border-top-right-radius: 0.5rem;
+    }
+
+    .grid-container .btn-group:nth-last-child(3) .btn {
+      border-bottom-left-radius: 0.5rem;
+    }
+
+    .grid-container .btn-group:nth-last-child(1) .btn {
+      border-bottom-right-radius: 0.5rem;
+    }
+
+    .btn-group .btn {
+      font-size: 16px;
+    }
+
+    .grid-header {
+      font-size: 16px;
+    }
+
+    .grid-label {
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: 450px) {
+      .grid-header {
+        font-size: 10px;
+      }
+
+      .grid-label {
+        font-size: 10px;
+      }
+
+      .btn-group .btn {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content" class="container-fluid d-flex flex-column align-items-center gap-3 is-max-desktop">
+    <h1 class="text-center title publication-title">🏆 BigO(Bench) Leaderboard 🏆</h1>
+    <h3 class="fw-light text-center title is-4"><small id="warning">BigO(Bench) assesses the capacity of Large
+        Language Models (LLMs) to comprehend time-space computational complexity of input or generated code.<br></small>
+    </h3>
+    <p class="text-center" style="font-size: 16px !important;">Explore how LLMs perform on the tasks of our benchmark,
+      and how they rank with one another!</p>
+    <div class="column has-text-centered">
+      <div class="publication-links">
+        <span class="link-block">
+          <a href="./index.html" style="text-decoration: none"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
+            <span>Homepage</span>
+          </a>
+        </span>
+
+        <span class="link-block">
+          <a href="https://arxiv.org/abs/2503.15242" target="_blank" style="text-decoration: none"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="fas fa-file-pdf"></i>
+            </span>
+            <span>Paper</span>
+          </a>
+        </span>
+
+        <span class="link-block">
+          <a href="https://github.com/facebookresearch/bigobench" style="text-decoration: none"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="fab fa-github"></i>
+            </span>
+            <span>Code</span>
+          </a>
+        </span>
+
+        <span class="link-block">
+          <a href="https://huggingface.co/datasets/facebook/BigOBench" style="text-decoration: none"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="far fa-images"></i>
+            </span>
+            <span>HF Dataset</span>
+          </a>
+        </span>
+
+        <span class="link-block">
+          <a href="./demo.html" style="text-decoration: none" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+            <span>Sample Explorer</span>
+          </a>
+        </span>
+      </div>
+    </div>
+    <div class="container mt-4 is-centered">
+      <div class="grid-container">
+        <div></div>
+        <div class="grid-header">Prediction</div>
+        <div class="grid-header">Generation</div>
+        <div class="grid-header">Ranking</div>
+        <div class="grid-label">Time</div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="time-prediction" autocomplete="off"
+            checked>
+          <label class="btn btn-outline-primary" for="time-prediction">Time<br>Prediction</label>
+        </div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="time-generation" autocomplete="off">
+          <label class="btn btn-outline-primary" for="time-generation">Time<br>Generation</label>
+        </div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="time-ranking" autocomplete="off">
+          <label class="btn btn-outline-primary" for="time-ranking">Time<br>Ranking</label>
+        </div>
+        <div class="grid-label">Space</div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="space-prediction" autocomplete="off">
+          <label class="btn btn-outline-primary" for="space-prediction">Space<br>Prediction</label>
+        </div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="space-generation" autocomplete="off">
+          <label class="btn btn-outline-primary" for="space-generation">Space<br>Generation</label>
+        </div>
+        <div class="btn-group" role="group">
+          <input type="radio" class="btn-check" name="complexityOptions" id="space-ranking" autocomplete="off">
+          <label class="btn btn-outline-primary" for="space-ranking">Space<br>Ranking</label>
+        </div>
+      </div>
+    </div>
+    <div id="chart" style="width: 100%; height: 800px"></div>
+    <div class="container-fluid d-flex flex-row flex-nowrap">
+      <div class="container-fluid d-flex flex-column align-items-center">
+        <!-- <label for="plused" class="text-success mb-3">⚡EvalPlus Tests⚡</label> -->
+        <table id="plused"
+          class="table table-responsive table-striped table-bordered flex-shrink-1 border border-success border-3">
+        </table>
+      </div>
+    </div>
+    <div id="notes">
+      <h3>📝 Notes</h3>
+      <div class="inline-block mt-3">
+        <ol>
+          <li>
+            All models are evaluated using their instruct variant, when available, in a zero-shot fashion.
+          </li>
+          <li>
+            Models are ranked according to pass@1 using greedy decoding. All models use temperature 0.8, except
+            DeepSeekR1-variants that use temperature 0.6.
+          </li>
+          <li>
+            GPT4-o and o1-mini do not share any estimate on inference compute, nor their number of weights. Also,
+            o1-mini returned many empty answers, potentially due to reasoning collapse: we discarded these answers and
+            used only non-empty answers to compute metrics. As a result, its performance can be regarded as an
+            upper-bound optimistic estimate.
+          </li>
+          <li>
+            DeepSeek-R1 distilled models used substantially more compute than Llama 3.1 405B (x2 compute nodes, x5
+            compute time and x16 generation tokens). GPT4-o and o1-mini do not share any estimate on inference compute.
+          </li>
+          <li>
+            Metrics are macro-averaged first by complexity classes within each problem and then across problems.
+          </li>
+          <li>
+            Pass@k measures the accuracy of finding the correct complexity; Best@k measures accuracy only across the
+            most optimized complexity class of each problem; All@k requires correct complexity output across all
+            complexity classes at once per problem. When talking about complexity prediction, 'finding' falls down to
+            outputting the correct complexity class; in the case of complexity generation and ranking, 'finding' implies
+            outputting that not only has the correct complexity when measured by the complexity framework, but also
+            passes the correctness tests of the problem in the first place.
+          </li>
+          <li>
+            "Size" here is the amount of activated model weight during inference.
+          </li>
+        </ol>
+      </div>
+    </div>
+    <!-- <div id="notes">
+      <h3>🤗 More Leaderboards</h3>
+      In addition to EvalPlus leaderboards, it is recommended to
+      comprehensively understand LLM coding ability through a diverse set of
+      benchmarks and leaderboards, such as:
+      <div class="inline-block mt-3">
+        <ol>
+          <li>
+            <a href="https://bigcode-bench.github.io/">BigCodeBench</a>
+          </li>
+          <li>
+            <a href="https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard">Big Code Models Leaderboard</a>
+          </li>
+          <li>
+            <a href="https://huggingface.co/spaces/lmsys/chatbot-arena-leaderboard">Chatbot Arena Leaderboard</a>
+          </li>
+          <li>
+            <a href="https://github.com/amazon-science/cceval">CrossCodeEval</a>
+          </li>
+          <li>
+            <a href="https://fudanselab-classeval.github.io/">ClassEval</a>
+          </li>
+          <li>
+            <a href="https://crux-eval.github.io/leaderboard.html">CRUXEval</a>
+          </li>
+          <li>
+            <a href="https://codetlingua.github.io/leaderboard.html">Code Lingua</a>
+          </li>
+          <li><a href="https://evo-eval.github.io/">Evo-Eval</a></li>
+          <li><a href="https://huggingface.co/spaces/EffiBench/effibench-leaderboard">EffiBench</a></li>
+          <li>
+            <a href="https://github.com/01-ai/HumanEval.jl">HumanEval.jl - Julia version HumanEval with EvalPlus test
+              cases</a>
+          </li>
+          <li>
+            <a href="https://livecodebench.github.io/leaderboard.html">LiveCodeBench</a>
+          </li>
+          <li>
+            <a href="https://sparksofagi.github.io/MHPP/">MHPP</a>
+          </li>
+          <li>
+            <a href="https://github.com/THUDM/NaturalCodeBench">NaturalCodeBench</a>
+          </li>
+          <li><a href="https://github.com/Leolty/repobench">RepoBench</a></li>
+          <li><a href="https://www.swebench.com/">SWE-bench</a></li>
+          <li>
+            <a href="https://leaderboard.tabbyml.com/">TabbyML Leaderboard</a>
+          </li>
+          <li>
+            <a href="https://llm4softwaretesting.github.io/">TestEval</a>
+          </li>
+        </ol>
+      </div>
+    </div> -->
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <!-- <div class="content has-text-centered">
+			<a class="icon-link"
+			   href="./static/videos/nerfies_paper.pdf">
+			  <i class="fas fa-file-pdf"></i>
+			</a>
+			<a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+			  <i class="fab fa-github"></i>
+			</a>
+		  </div> -->
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              The source code from this website is borrowed from <a
+                href="https://github.com/nerfies/nerfies.github.io">this template</a>, <a
+                href="https://minerva-demo.github.io">Minerva sample explorer</a>, <a
+                href="https://llemma-demo.github.io/">Llemma</a>, <a href="https://crux-eval.github.io/">CRUXEval</a>
+              and <a href="https://evalplus.github.io/leaderboard.html">EvalPlus</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // const originTable = document.getElementById("origin");
+    let complexityOptions = "time-prediction";
+    let complexityType = "time";
+    let complexityTask = "prediction";
+
+
+    const plusedTable = document.getElementById("plused");
+    // const benchmarkRadio = document.getElementById("Benchmark");
+    const chartDom = document.getElementById("chart");
+    var chart = echarts.init(chartDom);
+
+    const dataUrl = "./data/model_results_for_leaderboard.json";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", dataUrl, false); // false makes the request synchronous
+    xhr.send();
+
+    // const calcAverage = (a, b) => {
+    //   if (a == null || b == null) {
+    //     return null;
+    //   } else {
+    //     return parseFloat(((parseFloat(a) + parseFloat(b)) / 2).toFixed(1));
+    //   }
+    // };
+
+    var data;
+    /*
+    After calculating the average, the data should be like this:
+    data[Model]["pass@1"] = {
+      "humaneval": ...,
+      "mbpp": ...,
+      "humaneval+": ...,
+      "mbpp+": ...,
+      "average": ...,
+      "average+": ...,
+    }
+  */
+    let globalData = null;
+
+
+    var chartOption = {
+      legend: {
+        data: ["pass@1"],
+      },
+      grid: {
+        left: "1%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: {
+        name: "Act. Size",
+        type: "category",
+        boundaryGap: false,
+        data: [],
+        axisLabel: {
+          formatter: function (value) {
+            return value + "B";
+          },
+        },
+      },
+      yAxis: {
+        name: "PASS@1 (greedy decoding)",
+        type: "value",
+        show: true,
+        nameTextStyle: {
+          align: "left",
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            type: "dashed",
+          },
+        },
+        // min: 0, // Set the minimum value of the y-axis
+        // max: 100, // Set the maximum value of the y-axis
+      },
+      legend: {
+        data: ["models"],
+        itemStyle: {
+          opacity: 1.0,
+        },
+      },
+      tooltip: {
+        trigger: "item",
+        axisPointer: {
+          type: "cross",
+        },
+      },
+      series: [
+        // {
+        //   name: "base",
+        //   type: "scatter",
+        //   data: [],
+        //   itemStyle: {
+        //     color: "#91cc75",
+        //     opacity: 0.2,
+        //   },
+        //   emphasis: {
+        //     focus: "series",
+        //   },
+        //   lineStyle: {
+        //     width: 2,
+        //   },
+        //   markLine: {
+        //     symbol: "none",
+        //     emphasis: {
+        //       label: {
+        //         position: "middle",
+        //         formatter: function (params) {
+        //           return params.data.name;
+        //         },
+        //       },
+        //     },
+        //     data: [],
+        //   },
+        // },
+        {
+          name: "models",
+          type: "scatter",
+          data: [],
+          itemStyle: {
+            color: "#5470c6",
+            opacity: 0.2,
+          },
+          emphasis: {
+            focus: "series",
+          },
+          lineStyle: {
+            width: 2,
+          },
+          markLine: {
+            symbol: "none",
+            emphasis: {
+              label: {
+                position: "middle",
+                formatter: function (params) {
+                  return params.data.name;
+                },
+              },
+            },
+            data: [],
+          },
+        },
+      ],
+    };
+
+
+    const clearTable = () => {
+      // originTable.innerHTML = "";
+      plusedTable.innerHTML = "";
+    };
+
+
+    // score: 'average', 'humaneval', 'mbpp', 'humaneval+', 'mbpp+'
+    const displayTable = () => {
+      let table = plusedTable;
+      let headers = ["Model"].concat(
+        Object.keys(globalData[0][complexityType][complexityTask])
+      );
+
+      // filter out Null only for the column of interest and then sort
+      data = globalData
+        .filter((row) => {
+          return row[complexityType][complexityTask][headers[1]] != null;
+        })
+        .sort((a, b) => {
+          return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+        });
+
+      var thead = document.createElement("thead");
+      var headerRow = document.createElement("tr");
+      // add rank
+      var th = document.createElement("th");
+      th.textContent = "#";
+      headerRow.appendChild(th);
+      // headers
+      headers.forEach(function (header) {
+        var th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      var tbody = document.createElement("tbody");
+      // add rank
+      var rank = 1;
+      data.forEach((row) => {
+        var dataRow = document.createElement("tr");
+        var rankCell = document.createElement("td");
+        rankCell.textContent = rank;
+        dataRow.appendChild(rankCell);
+        var modelCell = document.createElement("td");
+        if (rank == 1) {
+          modelCell.textContent = "🥇 ";
+        } else if (rank == 2) {
+          modelCell.textContent = "🥈 ";
+        } else if (rank == 3) {
+          modelCell.textContent = "🥉 ";
+        } else {
+          modelCell.textContent = "";
+        }
+        rank++;
+        var modelLink = document.createElement("a");
+        modelLink.href = row["link"];
+        modelLink.textContent = row["Model"];
+        modelLink.classList.add("link-underline-primary");
+        modelLink.classList.add("text-nowrap");
+        modelCell.appendChild(modelLink);
+        modelCell.classList.add("d-flex");
+        modelCell.classList.add("flex-nowrap");
+        // var prompted = row["prompted"];
+        // var opendata = row["open-data"];
+        // if (prompted) {
+        //   // add a symbol to indicate the model is prompted
+        //   var promptedSymbol = document.createElement("span");
+        //   promptedSymbol.textContent = "✨";
+        //   modelCell.appendChild(promptedSymbol);
+        // }
+        // if (opendata.toUpperCase() == "FULL") {
+        //   // add a symbol to indicate the model is fully open-sourced
+        //   var promptedSymbol = document.createElement("span");
+        //   promptedSymbol.textContent = "💚";
+        //   modelCell.appendChild(promptedSymbol);
+        // } else if (opendata.toUpperCase() == "PARTIAL") {
+        //   // add a symbol to indicate the model is partially open-sourced
+        //   // i.e., a subset of the model implementation is close-sourced
+        //   var promptedSymbol = document.createElement("span");
+        //   promptedSymbol.textContent = "💙";
+        //   modelCell.appendChild(promptedSymbol);
+        // }
+
+        dataRow.appendChild(modelCell);
+
+        headers.forEach((metricName, index) => {
+          if (index > 0) {
+            // here we need to iterate !
+            let passCell = document.createElement("td");
+            // if (table == originTable) {
+            //   passCell.classList.add("text-danger");
+            // } else if (table == plusedTable) {
+            // passCell.textContent = "⚡";
+            passCell.classList.add("text-success");
+            // }
+            passCell.textContent += row[complexityType][complexityTask][metricName];
+            dataRow.appendChild(passCell);
+            tbody.appendChild(dataRow);
+          }
+        });
+      });
+      table.appendChild(tbody);
+    };
+
+
+    const clearChart = () => {
+      chartOption.xAxis.data = [];
+      chartOption.series[0].data = [];
+      // chartOption.series[1].data = [];
+      chartOption.series[0].markLine.data = [];
+      // chartOption.series[1].markLine.data = [];
+    };
+
+    const displayChart = (score) => {
+      const maxMarkLineModels = 8;
+      let headers = ["Model"].concat(
+        Object.keys(globalData[0][complexityType][complexityTask])
+      );
+
+      // filter out Null only for the column of interest and then sort
+      const data = globalData
+        .filter((row) => {
+          return row[complexityType][complexityTask][headers[1]] != null;
+        })
+        .sort((a, b) => {
+          return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+        });
+
+      // // sort first
+      // const data = globalData
+      //   .filter((model) => {
+      //     return model["pass@1"][score] != null;
+      //   })
+      //   .sort((a, b) => {
+      //     return b["pass@1"][score] - a["pass@1"][score];
+      //   });
+
+      const sizeList = [
+        ...new Set(
+          data
+            .filter((model) => model["size"] != null)
+            .map((model) => Math.round(model["size"])),
+        ),
+      ].sort((a, b) => {
+        return a - b;
+      });
+
+      chartOption.xAxis.data = sizeList;
+      chartOption.yAxis.max = 100;
+      // 1 + Math.max(...data.map((model) => model[complexityType][complexityTask][headers[1]]));
+
+      // const nonPromptedModels = data.filter(
+      //   (model) => model["prompted"] == false && model["size"] != null,
+      // );
+      const promptedModels = data.filter(
+        (model) => model["size"] != null,
+      );
+      const nonSizeModels = data.filter(
+        model => model.size === null
+      ).slice(0, maxMarkLineModels);
+
+      nonSizeModels.forEach((model) => {
+        chartOption.series[0].markLine.data.push({
+          name: model["Model"],
+          yAxis: model[complexityType][complexityTask][headers[1]],
+        });
+      });
+
+      [promptedModels].forEach((series, idx) => {
+        series.forEach((model) => {
+          chartOption.series[idx].data.push({
+            name: model["Model"],
+            value: [`${Math.round(model["size"])}`, model[complexityType][complexityTask][headers[1]]],
+          });
+        });
+      });
+
+      const offsets = [[50, 0]]
+        .concat(Array.from({ length: sizeList.length - 2 }, () => [0, 0]))
+        .concat([[-50, 0]]);
+      sizeList.forEach((size, idx) => {
+        // const bestNonPromptedModel = nonPromptedModels
+        //   .filter((model) => Math.round(model["size"]) == size)
+        //   .sort((a, b) => {
+        //     return b["pass@1"][score] - a["pass@1"][score];
+        //   })[0];
+        const bestPromptedModel = promptedModels
+          .filter((model) => Math.round(model["size"]) == size)
+          .sort((a, b) => {
+            return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+          })[0];
+        const hightLightBest = (series, model) => {
+          const point = chartOption.series[series].data.find(
+            (point) => point.name == model["Model"],
+          );
+          point.itemStyle = {
+            opacity: 1.0,
+          };
+          point.label = {
+            show: true,
+            position: "top",
+            offset: offsets[idx],
+            formatter: function (params) {
+              return params.data.name;
+            },
+            color: "inherit",
+          };
+        };
+        // if (bestNonPromptedModel) {
+        //   hightLightBest(0, bestNonPromptedModel);
+        // }
+        if (bestPromptedModel) {
+          hightLightBest(0, bestPromptedModel);
+        }
+      });
+
+      chart.setOption(chartOption);
+    };
+
+
+    if (xhr.status === 200) {
+      data = JSON.parse(xhr.responseText);
+      // Object.keys(data).forEach((key) => {
+      //   data[key]["pass@1"]["average"] = calcAverage(
+      //     data[key]["pass@1"]["humaneval"],
+      //     data[key]["pass@1"]["mbpp"],
+      //   );
+      //   data[key]["pass@1"]["average+"] = calcAverage(
+      //     data[key]["pass@1"]["humaneval+"],
+      //     data[key]["pass@1"]["mbpp+"],
+      //   );
+      // });
+      data = Object.keys(data).map((key) => {
+        return {
+          Model: key,
+          ...data[key],
+        };
+      });
+      globalData = data;
+
+      clearTable();
+      // displayTable(originTable, "humaneval");
+      displayTable();
+      clearChart();
+      displayChart();
+    } else {
+      // pop up error window
+      alert("Failed to load data from results.json");
+    }
+
+    // const avergeRadio = document.getElementById("Average");
+    // const humanEvalRadio = document.getElementById("HumanEval");
+    // const mbppRadio = document.getElementById("MBPP");
+
+    $("input[name='complexityOptions']").change(function () {
+      complexityOptions = $("input[name='complexityOptions']:checked").attr('id');
+      let parts = complexityOptions.split("-");
+      complexityType = parts[0];
+      complexityTask = parts[1];
+      clearTable();
+      // displayTable(originTable, "humaneval");
+      displayTable(plusedTable);
+      clearChart();
+      displayChart();
+    });
+
+    // humanEvalRadio.addEventListener("click", function () {
+    //   clearTable();
+    //   displayTable(originTable, "humaneval");
+    //   displayTable(plusedTable, "humaneval+");
+    //   clearChart();
+    //   displayChart("humaneval+");
+    // });
+
+    // mbppRadio.addEventListener("click", function () {
+    //   clearTable();
+    //   displayTable(originTable, "mbpp");
+    //   displayTable(plusedTable, "mbpp+");
+    //   clearChart();
+    //   displayChart("mbpp+");
+    // });
+
+    // avergeRadio.addEventListener("click", function () {
+    //   clearTable();
+    //   displayTable(originTable, "average");
+    //   displayTable(plusedTable, "average+");
+    //   clearChart();
+    //   displayChart("average");
+    // });
+
+    // humanEvalRadio.click();
+
+    window.addEventListener("resize", () => {
+      this.chart.resize();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+
+<!-- Copyright (c) Meta Platforms, Inc. and affiliates. -->
+<!-- All rights reserved. -->
+<!-- This source code is licensed under the license found in the LICENSE file in the root directory of this source tree. -->
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>BigO(Bench) Explorer</title>
+	<meta name="keywords" content="code, LLM, code generation, program synthesis">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link rel="shortcut icon" href="#" />
+
+
+
+	<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet" />
+
+	<link rel="stylesheet" href="./static/css/bulma.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+	<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+	<link rel="stylesheet" href="./static/css/index.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script defer src="./static/js/fontawesome.all.min.js"></script>
+	<script src="./static/js/bulma-carousel.min.js"></script>
+	<script src="./static/js/bulma-slider.min.js"></script>
+	<script src="./static/js/index.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+
+	<link rel="shortcut icon" href="./images/icon.png">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
+
+	<link href="https://cdn.jsdelivr.net/npm/prismjs@v1.x/themes/prism.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/components/prism-core.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs@v1.x/plugins/autoloader/prism-autoloader.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/prismjs-bibtex@2.1.0/prism-bibtex.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+
+	<style>
+		/* html, */
+		/* body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		} */
+
+		small {
+			font-weight: 300 !important;
+		}
+
+		body {
+			font-family: "JetBrains Mono", monospace;
+			background-color: #ffffff;
+			color: #000000;
+		}
+
+		pre {
+			padding: 0;
+			background-color: #f9f9f9;
+			/* A slightly lighter gray */
+		}
+
+		.container-custom {
+			display: flex;
+			flex-direction: column;
+			/* min-height: 300vh; */
+			width: 100%;
+			max-width: 900px;
+			margin: 0 auto;
+		}
+
+		.header,
+		.buttons,
+		.footer,
+		.key {
+			flex-shrink: 0;
+		}
+
+		.header {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.footer {
+			padding: 10px;
+			font-size: 12px;
+		}
+
+		.scrollable-div {
+			overflow-y: auto;
+			background-color: #f9f9f9;
+			/* A slightly lighter gray */
+			padding: 15px;
+			/* Increased padding for better spacing */
+			border-radius: 12px;
+			/* Slightly larger radius for a softer look */
+			border: 1px solid #ddd;
+			/* Lighter border color for less contrast */
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			/* Added a subtle shadow for depth */
+		}
+
+		.buttons {
+			margin-top: 10px;
+		}
+
+		.btn {
+			margin-bottom: 7px;
+		}
+
+		.left-col {
+			width: 200px;
+			/* Adjust this value as per your requirement */
+		}
+
+		.left-half {
+			width: 50%;
+			/* Adjust this value as per your requirement */
+		}
+
+		/* .table {
+			background-color: #f5f5f5;
+		} */
+
+		table tr,
+		table td {
+			border: none !important;
+		}
+
+		.bottom-border {
+			border-bottom: 1px solid gray !important;
+		}
+
+		.generation {
+			background-color: #3ebd66;
+			/* Color for "Correct" */
+		}
+
+		.generation.correct {
+			background-color: #3ebd66;
+			/* Color for "Correct" */
+		}
+
+		.generation.incorrect {
+			background-color: rgb(255 187 187);
+			/* Color for "Incorrect" */
+		}
+
+		code {
+			padding: 0;
+		}
+
+		.button-group {
+			display: flex;
+			justify-content: space-between;
+			width: 100px;
+			/* adjust this value as needed */
+			margin: 0 auto;
+		}
+
+		.nav-button {
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-size: 18px;
+			cursor: pointer;
+			transition: background-color 0.2s ease-in-out;
+		}
+
+		.nav-button:hover {
+			background-color: #ccc;
+		}
+
+		.problem-counter {
+			font-size: 16px;
+			color: #666;
+		}
+
+		.nav-button {
+			padding: 0.25rem 0.5rem;
+			font-size: 0.75rem;
+		}
+
+		.grid-container .btn-check {
+			position: absolute;
+			clip: rect(0, 0, 0, 0);
+			pointer-events: none;
+		}
+
+		.grid-container .btn-check:checked+.btn-outline-primary {
+			background-color: #007bff;
+			border-color: #007bff;
+			color: white;
+		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: auto repeat(3, 1fr);
+			gap: 0px;
+			row-gap: 0px;
+			align-items: center;
+			max-width: 500px;
+			margin: 0 auto;
+		}
+
+		@media screen and (max-width: 450px) {
+			.grid-header {
+				font-size: 10px;
+			}
+
+			.grid-label {
+				font-size: 10px;
+			}
+
+			.nav-button {
+				font-size: 10px;
+			}
+
+			.btn-group .btn {
+				font-size: 10px;
+			}
+		}
+
+		.grid-header {
+			text-align: center;
+			font-weight: bold;
+		}
+
+		.grid-label {
+			font-weight: bold;
+			margin-right: 10px;
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+
+		.grid-container .btn-group {
+			display: flex;
+			justify-content: stretch;
+			margin-top: 0;
+			margin-bottom: 0;
+			width: 100%;
+			/* Ensure the button group takes full width */
+		}
+
+		.grid-container .btn {
+			flex-grow: 1;
+			white-space: normal;
+			/* Allow text to wrap */
+			width: 100%;
+			/* Ensure each button takes full width of its container */
+			height: auto;
+			border-radius: 0;
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+
+		.grid-container .btn-group:nth-last-child(7) .btn {
+			border-top-left-radius: 0.5rem;
+		}
+
+		.grid-container .btn-group:nth-last-child(5) .btn {
+			border-top-right-radius: 0.5rem;
+		}
+
+		.grid-container .btn-group:nth-last-child(3) .btn {
+			border-bottom-left-radius: 0.5rem;
+		}
+
+		.grid-container .btn-group:nth-last-child(1) .btn {
+			border-bottom-right-radius: 0.5rem;
+		}
+
+		hr {
+			border: none;
+			border-top: 2px dashed gray;
+			/* Dashed top border */
+			margin: 10px;
+			/* Removed default margin */
+		}
+
+		.select-wrapper {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			max-width: 300px;
+		}
+
+		.select-wrapper::before {
+			/* content: ""; */
+			position: absolute;
+			top: 50%;
+			right: 15px;
+			transform: translateY(-50%);
+			border-style: solid;
+			border-width: 5px 5px 0 5px;
+			border-color: #333 transparent transparent transparent;
+		}
+
+		.select-wrapper select {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f0f0f0;
+			cursor: pointer;
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			width: 100%;
+		}
+
+		.select-wrapper select::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			border-style: solid;
+			border-width: 5px 0 5px 10px;
+			border-color: transparent transparent transparent #000;
+		}
+
+		.select-wrapper select option {
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+			cursor: pointer;
+		}
+
+		.select-wrapper select option:hover {
+			background-color: #ddd;
+		}
+
+		.select-wrapper select option:selected {
+			background-color: #aaa;
+			color: #fff;
+		}
+
+		#currentModel {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f0f0f0;
+			cursor: pointer;
+		}
+
+		#currentModel option {
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+			cursor: pointer;
+		}
+
+		#currentModel option:hover {
+			background-color: #ddd;
+		}
+
+		#currentModel option:selected {
+			background-color: #aaa;
+			color: #fff;
+		}
+
+		#currentModel {
+			transition: all 0.3s ease-in-out;
+		}
+
+		#currentModel:hover {
+			transform: scale(1.1);
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.publication-title {
+			font-family: 'JetBrains Mono', monospace;
+			background-color: #ffffff;
+			color: #000000;
+			padding-top: 20px;
+			font-size: 40px;
+		}
+
+		@media screen and (max-width: 550px) {
+			.publication-title {
+				font-size: 30px;
+			}
+		}
+
+		.correct-solution {
+			border: 2px solid #00FF00;
+			padding: 10px;
+			background-color: #F0F0F0;
+			/* Light gray background */
+		}
+
+		.correct-solution::before {
+			content: "\2713";
+			/* Checkmark character */
+			font-size: 18px;
+			color: #00FF00;
+			margin-right: 10px;
+		}
+
+		.incorrect-solution {
+			/* Red border to indicate incorrect solution */
+			border: 2px solid #FF0000;
+
+			/* Add some padding for better readability */
+			padding: 10px;
+
+			/* Light gray background for contrast */
+			background-color: #F0F0F0;
+		}
+
+		.incorrect-solution::before {
+			/* Cross character to indicate incorrect solution */
+			content: "\2717";
+
+			/* Font size for the cross character */
+			font-size: 18px;
+
+			/* Color of the cross character */
+			color: #FF0000;
+
+			/* Margin to separate the cross from the text */
+			margin-right: 10px;
+		}
+
+		.neutral-solution {
+			/* Remove any border */
+			border: 2px solid gray;
+
+			/* Add some padding for better readability */
+			padding: 10px;
+
+			/* Light gray background for contrast */
+			background-color: #F0F0F0;
+		}
+
+		.neutral-solution::before {
+			/* Remove any content added by previous styles */
+			content: "";
+		}
+
+
+		.correct-metric::after {
+			content: "\2713";
+			/* Checkmark character */
+			font-size: 30px;
+			color: #00FF00;
+			/* margin-right: 10px; */
+		}
+
+		.incorrect-metric::after {
+			content: "\2717";
+			font-size: 30px;
+			color: #FF0000;
+			/* margin-right: 10px; */
+		}
+
+		.neutral-metric::after {
+			/* Remove any content added by previous styles */
+			content: "";
+		}
+
+		#histogram-container {
+			width: 800px;
+			height: 400px;
+		}
+
+		#histogram-container:empty {
+			width: 0;
+			height: 0;
+			margin: 0;
+			padding: 0;
+			border: none;
+		}
+
+		small {
+			font-weight: 300 !important;
+		}
+
+		.no-coefficient-curve {
+			margin-top: 20px;
+		}
+
+		.no-coefficient-curve-reset {
+			margin-top: 0px;
+		}
+
+		.work-in-progress {
+			/* Dotted orange border to indicate work in progress */
+			border: 2px dotted #FF9900;
+			/* Add some padding for better readability */
+			padding: 10px;
+			/* Light gray background for contrast */
+			background-color: #F0F0F0;
+		}
+
+		.work-in-progress::before {
+			/* Wrench character to indicate work in progress */
+			content: "\26A0";
+			/* Font size for the wrench character */
+			font-size: 18px;
+			/* Color of the wrench character */
+			color: #FF9900;
+			/* Margin to separate the wrench from the text */
+			margin-right: 10px;
+		}
+
+		.no-work-in-progress {
+			/* Dotted orange border to indicate work in progress */
+			border: none;
+			/* Add some padding for better readability */
+			padding: none;
+			/* Light gray background for contrast */
+			background-color: none;
+		}
+
+		.no-work-in-progress::before {
+			/* Wrench character to indicate work in progress */
+			content: none;
+			/* Font size for the wrench character */
+			/* Color of the wrench character */
+			color: none;
+			/* Margin to separate the wrench from the text */
+			margin-right: none;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="content" class="container-fluid d-flex flex-column align-items-center gap-3 is-max-desktop">
+		<h1 class="text-center title publication-title">🔎 BigO(Bench) Sample
+			Explorer 🔎</h1>
+		<h3 class="fw-light text-center title is-4" style="max-width: 1150px; font-weight: 300 !important;"><small
+				id="warning" style="font-weight: 300 !important;">BigO(Bench) assesses the capacity of Large
+				Language Models (LLMs) to comprehend time-space computational complexity of input or generated
+				code.<br></small>
+		</h3>
+		<p class="text-center" style="max-width: 1000px; text-align: center !important;">Select a task, a problem and a
+			class of complexity for the solution, and compare the outputs of the LLMs!</p>
+
+		<div class="column has-text-centered">
+			<div class="publication-links">
+				<span class="link-block">
+					<a href="./index.html" style="text-decoration: none"
+						class="external-link button is-normal is-rounded is-dark">
+						<span class="icon">
+							<i class="fas fa-home"></i>
+						</span>
+						<span>Homepage</span>
+					</a>
+				</span>
+
+				<span class="link-block">
+					<a href="https://arxiv.org/abs/2503.15242" target="_blank" style="text-decoration: none"
+						class="external-link button is-normal is-rounded is-dark">
+						<span class="icon">
+							<i class="fas fa-file-pdf"></i>
+						</span>
+						<span>Paper</span>
+					</a>
+				</span>
+
+				<span class="link-block">
+					<a href="https://github.com/facebookresearch/bigobench" style="text-decoration: none"
+						class="external-link button is-normal is-rounded is-dark">
+						<span class="icon">
+							<i class="fab fa-github"></i>
+						</span>
+						<span>Code</span>
+					</a>
+				</span>
+
+				<span class="link-block">
+					<a href="https://huggingface.co/datasets/facebook/BigOBench" style="text-decoration: none"
+						class="external-link button is-normal is-rounded is-dark">
+						<span class="icon">
+							<i class="far fa-images"></i>
+						</span>
+						<span>HF Dataset</span>
+					</a>
+				</span>
+
+				<span class="link-block">
+					<a href="./leaderboard.html" style="text-decoration: none"
+						class="external-link button is-normal is-rounded is-dark">
+						<span class="icon">
+							<i class="fas fa-trophy"></i>
+						</span>
+						<span>Leaderboard</span>
+					</a>
+				</span>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="container mt-4 is-centered">
+		<div class="grid-container">
+			<div></div>
+			<div class="grid-header">Prediction</div>
+			<div class="grid-header">Generation</div>
+			<div class="grid-header">Ranking</div>
+			<div class="grid-label">Time</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="time-prediction" autocomplete="off"
+					checked>
+				<label class="btn btn-outline-primary" for="time-prediction">Time<br>Prediction</label>
+			</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="time-generation" autocomplete="off">
+				<label class="btn btn-outline-primary" for="time-generation">Time<br>Generation</label>
+			</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="time-ranking" autocomplete="off">
+				<label class="btn btn-outline-primary" for="time-ranking">Time<br>Ranking</label>
+			</div>
+			<div class="grid-label">Space</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="space-prediction" autocomplete="off">
+				<label class="btn btn-outline-primary" for="space-prediction">Space<br>Prediction</label>
+			</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="space-generation" autocomplete="off">
+				<label class="btn btn-outline-primary" for="space-generation">Space<br>Generation</label>
+			</div>
+			<div class="btn-group" role="group">
+				<input type="radio" class="btn-check" name="complexityOptions" id="space-ranking" autocomplete="off">
+				<label class="btn btn-outline-primary" for="space-ranking">Space<br>Ranking</label>
+			</div>
+		</div>
+	</div>
+	<!-- <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+		<div class="columns is-centered has-text-centered">
+			<div class="column is-full">
+				<h2 class="title is-4">Complexity Type</h2>
+				<div class="content has-text-centered" style="font-size: 120%;">
+					<select name="complexity-type" id="complexityType">
+						<option value="time">Time Complexity</option>
+						<option value="space">Space Complexity</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+		<div class="columns is-centered has-text-centered">
+			<div class="column is-full">
+				<h2 class="title is-4">Complexity Task</h2>
+				<div class="content has-text-centered" style="font-size: 120%;">
+					<select name="complexity-task" id="complexityTask">
+						<option value="prediction">Prediction</option>
+						<option value="generation">Generation</option>
+						<option value="ranking">Coefficient Ranking</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</section> -->
+
+	<section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+		<div class="container-custom">
+			<!-- Scrollable Content Area -->
+			<div class="scrollable-div">
+				<!-- Scroll between problems -->
+				<div class="navigation-buttons text-center mt-3">
+					<h2 class="title is-5" style="margin-bottom: 0px; white-space: normal; word-wrap: break-word;">
+						<pre id="problemName"
+							style="margin-bottom: 0px; white-space: normal; word-wrap: break-word;"></pre>
+					</h2>
+					<div class="button-group" style="margin-top: 10px;">
+						<button type="button" id="leftButtonProblem"
+							class="btn btn-secondary nav-button btn-sm">«</button>
+						<button type="button" id="randButtonProblem"
+							class="btn btn-secondary nav-button btn-sm">??</button>
+						<button type="button" id="rightButtonProblem"
+							class="btn btn-secondary nav-button btn-sm">»</button>
+					</div>
+					<div class="mt-2 problem-counter">
+						<span id="currentProblemNumber">1</span> / <span id="totalProblemCount">5</span>
+					</div>
+				</div>
+				<br>
+				<br>
+				<!-- Problem Description -->
+				<div>
+					<h2 class="title is-5">
+						<pre id="problemDescriptionTitle"></pre>
+					</h2>
+					<pre id="problemDescription"></pre>
+				</div>
+				<br>
+			</div>
+		</div>
+		<br>
+
+		<div class="container-custom">
+			<!-- Scrollable Content Area -->
+			<div class="scrollable-div">
+
+				<!-- Scroll Complexity -->
+				<div class="navigation-buttons text-center mt-3">
+					<h3 class="title is-5" style="margin-bottom: 0px; white-space: normal; word-wrap: break-word;">
+						<pre id="complexity"
+							style="margin-bottom: 0px; white-space: normal; word-wrap: break-word;"></pre>
+					</h3>
+					<div class="button-group" style="margin-top: 10px;">
+						<button type="button" id="leftButtonComplexity"
+							class="btn btn-secondary nav-button btn-sm">«</button>
+						<button type="button" id="randButtonComplexity"
+							class="btn btn-secondary nav-button btn-sm">??</button>
+						<button type="button" id="rightButtonComplexity"
+							class="btn btn-secondary nav-button btn-sm">»</button>
+					</div>
+					<div class="mt-2 problem-counter">
+						<span id="currentComplexityNumber">1</span> / <span id="totalComplexityCount">2</span>
+					</div>
+				</div>
+				<br>
+				<br>
+				<!-- Human Solution -->
+				<pre id="complexityNote"></pre>
+				<div>
+					<h2 class="title is-5">
+						<pre id="humanSolutionTitle"></pre>
+					</h2>
+					<code class="python" style="font-size: 16px;"><pre id="humanSolution"></pre></code>
+				</div>
+				<br>
+			</div>
+		</div>
+		<br>
+
+		<div class="container-custom">
+			<!-- Scrollable Content Area -->
+			<div class="scrollable-div">
+
+				<!-- Model Selection -->
+				<div class="navigation-buttons text-center mt-3">
+					<!-- <label for="currentModel">model:</label> -->
+					<h3 class="title is-5" style="margin-bottom: 0px;">
+						<pre id="modelTitle" style="margin-bottom: 0px;"></pre>
+					</h3>
+					<!-- <div class="select-wrapper"> -->
+					<select name="model-names" id="currentModel" style="margin-top: 10px;">
+						<option value="Llama 3.1 8B">Llama 3.1 8B</option>
+						<option value="DeepSeekR1 Llama 70B">DeepSeekR1 Llama 70B</option>
+					</select>
+					<!-- </div> -->
+					<!-- <label for="temps">temp:</label> 
+				  <select name="temps" id="temps"> 
+					  <option value="0.2">0.2</option> 
+					  <option value="0.8">0.8</option> 
+				  </select> -->
+				</div>
+				<br>
+				<br>
+
+				<!-- Model Score -->
+				<div class="left-right">
+					<pre id="explanationQuery"></pre>
+					<h2 class="title is-5">
+						<pre id="modelScoreTitle"></pre>
+					</h2>
+					<pre id="modelScore"></pre>
+				</div>
+				<br>
+
+				<!-- Model Correct Solution -->
+				<div class="left-right">
+					<h2 class="title is-5">
+						<pre id="modelCorrectSolutionTitle"></pre>
+					</h2>
+					<div id="histogram-container"></div>
+					<pre id="modelCorrectSolutionCurve"></pre>
+					<pre id="correctNote"></pre>
+					<code class="python"><pre id="modelCorrectSolution"></pre></code>
+				</div>
+				<br>
+
+				<div class="left-right">
+					<h2 class="title is-5">
+						<pre id="modelIncorrectSolutionTitle"></pre>
+					</h2>
+					<pre id="incorrectSolutionDetails"></pre>
+					<pre id="incorrectSolutionDetails2"></pre>
+					<pre id="incorrectNote"></pre>
+					<code class="python"><pre id="modelIncorrectSolution"></pre></code>
+				</div>
+				<br>
+			</div>
+			<br>
+			<br>
+
+			<!-- Key -->
+			<!-- <div class="key mt-3 text-center">
+			<span class="key-item correct">Correct</span>
+			<span class="key-item incorrect">Incorrect</span>
+		  </div> -->
+		</div>
+	</section>
+
+	<section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+		<div class="container-custom">
+			<div id="notes" style="font-size:16px;">
+				<h3>📝 Notes</h3>
+				<div class="inline-block mt-3">
+					<ol>
+						<li>
+							Complexity is defined in the following way in model prompts, so to remove some ambiguity
+							(here is an example for time, in the case of space, 'time' and 'space' are just replaced by
+							one another): <br> Provide the time complexity for the following competitive programming
+							question and corresponding solution. When analyzing the complexity of an algorithm, consider
+							the worst-case scenario where all possible input combinations are tried, given the following
+							conditions: 1. the inputs must adhere to the specified data types of the problem; 2. the
+							inputs should not cause the code to crash or exit on an exception; 3. the inputs do not
+							necessarily need to satisfy additional constraints that are potentially mentioned in the
+							problem statement; 4. calling input() does not consume runtime nor memory, but of course any
+							operations on top of it or afterwards will be counted towards runtime and memory footprint;
+							5. Anything printed gets added to the memory. You can take advantage of Python-specific
+							optimizations provided by the underlying CPython interpreter or compiler to achieve the
+							desired complexity, and you must account for them when analyzing the complexity. Please
+							ignore any constraints on the input sizes that may have been previously mentioned in the
+							problem description. Compute the big-O complexity as if inputs can be as large as possible.
+							Output the big-O time complexity only, no explanation needed, no other words needed.
+						</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<!-- <div class="footer text-center mt-3">
+		The site is inspired by and based on
+		<a href="https://minerva-demo.github.io">Minerva sample explorer</a> and
+		<a href="https://llemma-demo.github.io/">Llemma</a>. Thanks!
+	</div> -->
+
+	<footer class="footer">
+		<div class="container">
+			<!-- <div class="content has-text-centered">
+			<a class="icon-link"
+			   href="./static/videos/nerfies_paper.pdf">
+			  <i class="fas fa-file-pdf"></i>
+			</a>
+			<a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+			  <i class="fab fa-github"></i>
+			</a>
+		  </div> -->
+			<div class="columns is-centered">
+				<div class="column is-8">
+					<div class="content">
+						<p>
+							The source code from this website is borrowed from <a
+								href="https://github.com/nerfies/nerfies.github.io">this template</a>, <a
+								href="https://minerva-demo.github.io">Minerva sample explorer</a>, <a
+								href="https://llemma-demo.github.io/">Llemma</a>, <a
+								href="https://crux-eval.github.io/">CRUXEval</a> and <a
+								href="https://evalplus.github.io/leaderboard.html">EvalPlus</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			// FIRST, let's define the global variables!
+			let searchParams = new URLSearchParams(window.location.search);
+			let problemName = "";
+			let currentProblemNumber = 1;
+			let totalProblemCount = 5;
+			let problemDescription = "";
+			let complexity = "";
+			let currentComplexityNumber = 1;
+			let totalComplexityCount = 2;
+			let humanSolution = "";
+			let modelScore = "";
+			let modelCorrectSolution = "";
+			let modelCorrectSolutionCurve = "";
+			let complexityNote = "";
+			let correctNote = "";
+			let incorrectNote = "";
+			let explanationQuery = "";
+			let modelIncorrectSolution = "";
+			let incorrectSolutionDetails = "";
+			let incorrectSolutionDetails2 = "";
+
+			// Special variables from dropdown menus
+			let currentModel = "Llama 3.1 8B";
+			let complexityType = "time";
+			let complexityTask = "prediction";
+			let complexityOptions = "time-prediction";
+
+			// SECOND, let's load the data!
+			let tinyTimeTestSet;
+			let tinySpaceTestSet;
+			let modelResults;
+
+			// Set up titles
+			let problemDescriptionTitle = "Problem description";
+			let humanSolutionTitle = "Reference human solution";
+			let modelTitle = "Model";
+			let modelScoreTitle = "Model Scores";
+			let modelCorrectSolutionTitle = "Correct Model Solution";
+			let modelIncorrectSolutionTitle = "Incorrect Model Solution";
+
+			// THIRD, let's link the variables to the HTML elements!
+			$("#problemName").text(problemName);
+			$("#currentProblemNumber").text(currentProblemNumber);
+			$("#totalProblemCount").text(totalProblemCount);
+			$("#problemDescription").text(problemDescription);
+			$("#complexity").text(complexity);
+			$("#currentComplexityNumber").text(currentComplexityNumber);
+			$("#totalComplexityCount").text(totalComplexityCount);
+			$("#humanSolution").text(humanSolution);
+			$("#modelScore").text(modelScore);
+			$("#modelCorrectSolution").text(modelCorrectSolution);
+			$("#modelCorrectSolutionCurve").text(modelCorrectSolutionCurve);
+			$("#explanationQuery").text("");
+			$("#complexityNote").text("");
+			$("#correctNote").text("");
+			$("#incorrectNote").text("");
+			$("#modelIncorrectSolution").text(modelIncorrectSolution);
+			$("#incorrectSolutionDetails").text(incorrectSolutionDetails);
+			$("#incorrectSolutionDetails2").text(incorrectSolutionDetails2);
+
+
+			$("#problemDescriptionTitle").text(problemDescriptionTitle);
+			$("#humanSolutionTitle").text(humanSolutionTitle);
+			$("#modelTitle").text(modelTitle);
+			$("#modelScoreTitle").text(modelScoreTitle);
+			$("#modelCorrectSolutionTitle").text(modelCorrectSolutionTitle);
+			$("#modelIncorrectSolutionTitle").text(modelIncorrectSolutionTitle);
+
+			// Now, specific for the histogram
+			let humanCoeffList = [];
+			let humanCoeffFiltered = [];
+			let modelCoeff = null;
+			let showHistogram = false;
+			let frequencyMap = {};
+			let ctx = document.createElement('canvas').getContext('2d');
+			// let chart = new Chart(ctx, {
+			// 	type: 'bar',
+			// 	data: {
+			// 		labels: Object.keys(frequencyMap),
+			// 		datasets: [{
+			// 			label: 'Frequency',
+			// 			data: Object.values(frequencyMap),
+			// 			backgroundColor: 'rgba(255, 99, 132, 0.2)',
+			// 			borderColor: 'rgba(255, 99, 132, 1)',
+			// 			borderWidth: 1
+			// 		}]
+			// 	},
+			// 	options: {
+			// 		scales: {
+			// 			x: {
+			// 				title: {
+			// 					display: true,
+			// 					text: 'Values'
+			// 				}
+			// 			},
+			// 			y: {
+			// 				beginAtZero: true,
+			// 				title: {
+			// 					display: true,
+			// 					text: 'Frequency'
+			// 				}
+			// 			}
+			// 		},
+			// 		animation: {
+			// 			duration: 1000
+			// 		}
+			// 	}
+			// });
+			let chart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: Object.keys(frequencyMap),
+					datasets: [{
+						label: 'Human solutions',
+						data: Object.values(frequencyMap),
+						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						borderColor: 'rgba(255, 99, 132, 1)',
+						borderWidth: 1,
+						barThickness: 10 // Adjust this value to control the width of the bars
+					}]
+				},
+				// plugins : [],
+				options: {
+					scales: {
+						x: {
+							title: {
+								display: true,
+								text: 'Coefficient (lower is better)'
+							},
+							type: 'logarithmic', // Set the x-axis type to logarithmic
+							position: 'bottom', // Required for logarithmic scale
+							ticks: {
+								callback: (value) => {
+									return Number(value).toExponential(2); // Display ticks in scientific notation with 2 decimal places
+								},
+								rotation: 45 // Rotate the ticks by 45 degrees
+							}
+						},
+						y: {
+							beginAtZero: true,
+							title: {
+								display: true,
+								text: 'Number of human solutions'
+							}
+						}
+					},
+					animation: {
+						duration: 1000
+					},
+					// annotations: [],
+				}
+			});
+
+			function findNonOutliers(data) {
+				data.sort((a, b) => a - b);
+				let Q1Index = Math.floor(data.length * 0.1);
+				let Q3Index = Math.floor(data.length * 0.9);
+				let Q1 = data[Q1Index];
+				let Q3 = data[Q3Index];
+				let lowerBound = Q1 / 10;
+				let upperBound = Q3 * 10;
+				let nonOutliers = data.filter((value) => value >= lowerBound && value <= upperBound);
+				return nonOutliers;
+			}
+
+			function createFrequencyMap(values) {
+				values = findNonOutliers(values);
+				humanCoeffFiltered = values;
+				console.log(values);
+				// Calculate the range of the values
+				let min = Math.min(...values);
+				let max = Math.max(...values);
+				// Create an array of logarithmically spaced bin edges
+				let numBins = 20;
+				let logMin = Math.log10(min);
+				let logMax = Math.log10(max);
+				let binEdges = Array(numBins + 1).fill(0).map((_, i) => Math.pow(10, logMin + (logMax - logMin) * i / numBins));
+				// Create the frequency map
+				let frequencyMap = {};
+				values.forEach((value) => {
+					// Find the bin index for the current value
+					let binIndex = binEdges.findIndex((edge) => edge > value) - 1;
+					if (binIndex < 0) {
+						binIndex = 0;
+					}
+					if (binIndex >= numBins) {
+						binIndex = numBins - 1;
+					}
+					// Create a label for the bin
+					let binLabel = Math.sqrt(binEdges[binIndex] * binEdges[binIndex + 1]).toExponential(2);
+					// Update the frequency map
+					if (frequencyMap[binLabel]) {
+						frequencyMap[binLabel]++;
+					} else {
+						frequencyMap[binLabel] = 1;
+					}
+				});
+				console.log(frequencyMap);
+				return frequencyMap;
+			}
+
+			function updateChart() {
+				let newFrequencyMap = createFrequencyMap(humanCoeffList);
+				chart.data.labels = Object.keys(newFrequencyMap);
+				chart.data.datasets[0].data = Object.values(newFrequencyMap);
+				chart.update();
+			}
+			function drawTargetLine() {
+				$("#modelCorrectSolutionCurve").removeClass()
+
+				if (modelCoeff === null) {
+					// in which case display detail that there is nothing to display !
+					$("#modelCorrectSolutionCurve").text("No solution coefficient for the model to display (as there is no correct solution)");
+					$("#modelCorrectSolutionCurve").addClass("no-coefficient-curve")
+				} else {
+					console.log('modelCoeff:', modelCoeff);
+					const ctx = chart.ctx;
+
+					let xValue = modelCoeff;
+					// Get the current scales
+					let scaleX = chart.scales.x;
+					let scaleY = chart.scales.y;
+					// console.log('canvas context:', ctx);
+					// Check if the xValue is within the scale range
+					let minX = Math.log10(scaleX.min);
+					let maxX = Math.log10(scaleX.max);
+					// console.log('x-axis scale range:', minX, maxX);
+					let logXValue = Math.log10(xValue);
+					// console.log('logXValue:', logXValue);
+					if (logXValue < minX) {
+						logXValue = minX;
+					} else if (logXValue > maxX) {
+						logXValue = maxX;
+					}
+
+					const xPixel = (logXValue - minX) / (maxX - minX) * (scaleX.width - 0) + 0;
+
+					xValue = Math.min(xValue, Math.max(...humanCoeffFiltered));
+					xValue = Math.max(xValue, Math.min(...humanCoeffFiltered));
+
+					// chart.options.annotations.push(
+					// 	{
+					// 	type: 'line',
+					// 	mode: 'vertical',
+					// 	scaleID: 'x-axis-0',
+					// 	value: logXValue,
+					// 	borderColor: 'rgba(255, 0, 0, 1)',
+					// 	borderWidth: 5,
+					// }
+					// );
+					chart.options.plugins = {
+						annotation: {
+							annotations: [
+								{
+									type: 'line',
+									mode: 'vertical',
+									scaleID: 'x',
+									value: xValue,
+									borderColor: 'red',
+									borderWidth: 4,
+									borderDash: [10, 5],
+									label: {
+										enabled: true,
+										content: 'Vertical Line'
+									},
+									// drawTime: 1000, // animate the drawing of the line over 1 second
+									// removeTime: 500 // animate the removal of the line over 0.5 seconds
+								},
+								// {
+								// 	type: 'line',
+								// 	mode: 'vertical',
+								// 	scaleID: 'x',
+								// 	value: logXValue,
+								// 	borderColor: 'red',
+								// 	borderWidth: 2,
+								// 	label: {
+								// 		enabled: true,
+								// 		content: 'Vertical Line'
+								// 	}
+								// },
+								// {
+								// 	type: 'line',
+								// 	mode: 'vertical',
+								// 	scaleID: 'x-axis-0',
+								// 	value: modelCoeff,
+								// 	borderColor: 'red',
+								// 	borderWidth: 2,
+								// 	label: {
+								// 		enabled: true,
+								// 		content: 'Vertical Line'
+								// 	}
+								// },
+								// {
+								// 	type: 'line',
+								// 	mode: 'vertical',
+								// 	scaleID: 'x-axis-0',
+								// 	value: logXValue,
+								// 	borderColor: 'red',
+								// 	borderWidth: 2,
+								// 	label: {
+								// 		enabled: true,
+								// 		content: 'Vertical Line'
+								// 	}
+								// },
+							]
+						}
+					}
+					// const customLinePlugin = {
+					// 	id: 'customLine',
+					// 	afterDraw: (chart) => {
+					// 		console.log("calling plugin")
+					// 		const ctx = chart.ctx;
+
+					// 		let xValue = modelCoeff;
+					// 		// Get the current scales
+					// 		let scaleX = chart.scales.x;
+					// 		let scaleY = chart.scales.y;
+					// 		// console.log('canvas context:', ctx);
+					// 		// Check if the xValue is within the scale range
+					// 		let minX = Math.log10(scaleX.min);
+					// 		let maxX = Math.log10(scaleX.max);
+					// 		// console.log('x-axis scale range:', minX, maxX);
+					// 		let logXValue = Math.log10(xValue);
+					// 		// console.log('logXValue:', logXValue);
+					// 		if (logXValue < minX) {
+					// 			logXValue = minX;
+					// 		} else if (logXValue > maxX) {
+					// 			logXValue = maxX;
+					// 		}
+
+					// 		const xPixel = (logXValue - minX) / (maxX - minX) * (scaleX.width - 0) + 0;
+					// 		// ctx.save();
+					// 		ctx.beginPath();
+					// 		ctx.strokeStyle = 'rgba(255, 0, 0, 1)'; // Use a bright red color
+					// 		ctx.lineWidth = 5; // Increase the line width
+					// 		ctx.moveTo(xPixel + scaleX.left, scaleY.bottom);
+					// 		ctx.lineTo(xPixel + scaleX.left, scaleY.top);
+					// 		ctx.stroke();
+					// 		// ctx.restore();
+					// 		chart.ctx = ctx;
+					// 	}
+					// };
+					// chart.plugins = [customLinePlugin];
+					// chart.plugins.push();
+
+					chart.update();
+					// Calculate the pixel position of the xValue manually
+					// let xPixel = (logXValue - minX) / (maxX - minX) * (scaleX.width - 0) + 0;
+					// console.log('xPixel:', xPixel);
+					// console.log('scaleX.left:', scaleX.left);
+					// console.log('scaleX.width:', scaleX.width);
+					// // Draw the line
+					// ctx.beginPath();
+					// ctx.strokeStyle = 'rgba(255, 0, 0, 1)'; // Use a bright red color
+					// ctx.lineWidth = 5; // Increase the line width
+					// ctx.moveTo(xPixel + scaleX.left, scaleY.bottom);
+					// ctx.lineTo(xPixel + scaleX.left, scaleY.top);
+					// ctx.stroke();
+					// // Add this line to ensure the drawn line is visible on top of the chart
+					// chart.ctx = ctx;
+					// Try drawing the line again after a short delay to ensure it's drawn on top of other chart elements
+
+					// setTimeout(function() {
+					// 	ctx.beginPath();
+					// 	ctx.strokeStyle = 'rgba(255, 0, 0, 1)';
+					// 	ctx.lineWidth = 5;
+					// 	ctx.moveTo(xPixel + scaleX.left, scaleY.bottom);
+					// 	ctx.lineTo(xPixel + scaleX.left, scaleY.top);
+					// 	ctx.stroke();
+					// }, 100);
+
+					// chart.options.onDraw = function(ctx) {
+					// 	let xPixel = (logXValue - minX) / (maxX - minX) * (scaleX.width - 0) + 0;
+					// 	ctx.globalCompositeOperation = 'source-over';
+					// 	ctx.beginPath();
+					// 	ctx.strokeStyle = 'rgba(255, 0, 0, 1)';
+					// 	ctx.lineWidth = 5;
+					// 	ctx.moveTo(xPixel + scaleX.left, scaleY.bottom);
+					// 	ctx.lineTo(xPixel + scaleX.left, scaleY.top);
+					// 	ctx.stroke();
+					// 	chart.ctx = ctx;
+					// };
+
+				}
+			}
+
+			function isNumeric(str) {
+				// Check if the input is a string and if it can be converted to a finite number
+				return typeof str === 'string' && !isNaN(str) && !isNaN(parseFloat(str));
+			}
+
+			function secretHarmonizeComplexityImproved(complexity) {
+				const symbolsToKeep = ['*', '+', 'log', '^2', '^3', '^4'];
+				const symbolsToDelete = ['(', ')', '_'];
+				complexity = complexity.replace('**', '^');
+				complexity = complexity.replace('\\times', '*');
+				complexity = complexity.replace("\u202f", "");
+				complexity = complexity.replace("²", '^2');
+				complexity = complexity.replace("\\", "");
+				complexity = complexity.replace("×", "*");
+				let tempComplexity = '';
+				if (complexity.slice(0, 2).toLowerCase() === 'o(') {
+					tempComplexity = complexity.slice(2);
+				} else {
+					tempComplexity = complexity;
+				}
+				complexity = tempComplexity;
+				tempComplexity = '';
+				for (let x of complexity.toLowerCase()) {
+					if (!symbolsToDelete.includes(x)) {
+						tempComplexity += x;
+					}
+				}
+				complexity = tempComplexity;
+				if (complexity === '1') {
+					return '1';
+				}
+				const elementList = [];
+				let previousI = null;
+				let i = 0;
+				while (i < complexity.length) {
+					let finishedNormally = true;
+
+					for (const symbol of symbolsToKeep) {
+						if (complexity.slice(i, i + symbol.length) === symbol) {
+							if (previousI !== null) {
+								if (isNumeric(complexity.slice(previousI, i)) && symbol === '*') {
+									previousI = null;
+									i += symbol.length;
+									break;
+								}
+								elementList.push(complexity.slice(previousI, i));
+								previousI = null;
+							}
+							elementList.push(complexity.slice(i, i + symbol.length));
+							i += symbol.length;
+							finishedNormally = false;
+							break;
+						}
+					}
+					if (finishedNormally) {
+						if (previousI === null) {
+							previousI = i;
+						}
+						i++;
+					}
+				}
+				if (previousI !== null) {
+					elementList.push(complexity.slice(previousI));
+					previousI = null;
+				}
+				const letterList = ['n', 'm', 'p', 'q', 'k', 'l', 'u', 'v', 'w'];
+				const elementListExpanded = [];
+				for (let i = 0; i < elementList.length; i++) {
+					if (symbolsToKeep.includes(elementList[i])) {
+						elementListExpanded.push(elementList[i]);
+					} else {
+						if (elementList[i].split('').every(letter => letterList.includes(letter))) {
+							elementListExpanded.push(...elementList[i].split('').join('*').split(''));
+						} else {
+							elementListExpanded.push(elementList[i]);
+						}
+						if (i < elementList.length - 1 && elementList[i + 1] === 'log') {
+							elementListExpanded.push('*');
+						}
+					}
+				}
+				const elementToAnonymizedVariable = {};
+				let counter = 0;
+				function nextVariableName() {
+					counter++;
+					return `var_${counter}`;
+				}
+				tempComplexity = '';
+				for (const element of elementListExpanded) {
+					if (symbolsToKeep.includes(element)) {
+						tempComplexity += element;
+					} else {
+						if (!elementToAnonymizedVariable[element]) {
+							elementToAnonymizedVariable[element] = nextVariableName();
+						}
+						tempComplexity += elementToAnonymizedVariable[element];
+					}
+				}
+				complexity = tempComplexity;
+				return complexity;
+			}
+
+			function secretEqualityComplexitiesImproved(complexity1, complexity2) {
+				complexity1 = secretHarmonizeComplexityImproved(complexity1);
+				complexity2 = secretHarmonizeComplexityImproved(complexity2);
+				const equivalentPairList = [
+					('var_1*logvar_1*var_2', 'var_1*var_2*logvar_2'),
+					('var_1*logvar_1+var_2', 'var_1+var_2*logvar_2'),
+					('var_1*logvar_2', 'logvar_1*var_2'),
+
+					('var_1*logvar_1+var_2+var_3', 'var_1+var_2*logvar_2+var_3'),
+					('var_1*logvar_1+var_2+var_3', 'var_1+var_2+var_3*logvar_3'),
+					('var_1+var_2*logvar_2+var_3', 'var_1+var_2+var_3*logvar_3'),
+
+					('var_1*logvar_1+var_2*logvar_2+var_3', 'var_1+var_2*logvar_2+var_3*logvar_3'),
+					('var_1*logvar_1+var_2*logvar_2+var_3', 'var_1*logvar_1+var_2+var_3*logvar_3'),
+					('var_1+var_2*logvar_2+var_3*logvar_3', 'var_1*logvar_1+var_2+var_3*logvar_3'),
+
+					('var_1*var_2+var_3', 'var_1+var_2*var_3'),
+					('var_1*logvar_1*var_2+var_3^2', 'var_1^2+var_2*logvar_2*var_3'),
+					('var_1*logvar_2*logvar_3*var_4', 'var_1*var_2*logvar_3*logvar_4'),
+
+
+
+					('var_1^2+var_2', 'var_1+var_2^2'),
+					('var_1^2*var_2', 'var_1*var_2^2'),
+					('var_1^2+logvar_2', 'logvar_1+var_2^2'),
+					('var_1^2*logvar_2', 'logvar_1*var_2^2'),
+
+					('var_1*logvar_2*logvar_3*logvar_4', 'logvar_1*logvar_2*logvar_3*var_4'),
+					('var_1*logvar_1+var_2^2', 'var_1^2+var_2*logvar_2'),
+
+					('logvar_1*logvar_2*logvar_3*var_4', 'logvar_1*var_2*logvar_3*logvar_4'),
+
+					('var_1*logvar_2*var_3*logvar_4', 'logvar_1*logvar_2*var_3*var_4'),
+
+					('logvar_1*logvar_2*var_3', 'var_1*logvar_2*logvar_3'),
+
+					('var_1+var_2+var_3*logvar_3+var_4', 'var_1+var_2+var_3+var_4*logvar_4'),
+					('var_1+var_2*logvar_2^2', 'var_1*logvar_1^2+var_2'),
+					('logvar_1*logvar_2*var_3', 'logvar_1*var_2*logvar_3'),
+					('logvar_1*var_2^2*logvar_3', 'logvar_1*var_2*logvar_3^2'),
+
+					('logvar_1*var_2*logvar_3', 'var_1*logvar_2*logvar_3'),
+					('var_1+var_2*logvar_3', 'logvar_1*var_2+var_3'),
+					('var_1*logvar_1^2+var_2+var_3', 'var_1+var_2*logvar_2^2+var_3'),
+					('logvar_1+var_2+var_3', 'var_1+var_2+logvar_3'),
+					('logvar_1*logvar_2*var_3*logvar_4', 'logvar_1*var_2*logvar_3*logvar_4'),
+					('var_1*logvar_2^2', 'logvar_1*var_2^2'),
+					('logvar_1*logvar_2*logvar_3*var_4', 'logvar_1*logvar_2*var_3*logvar_4'),
+					('var_1+var_2*logvar_1+var_2+var_3', 'var_1+var_2+var_3*logvar_2+var_3'),
+					('var_1+var_2^2+var_3', 'var_1^2+var_2+var_3'),
+					('var_1^2+var_2+var_3^2', 'var_1+var_2^2+var_3^2'),
+					('logvar_1*logvar_2*var_3^2', 'logvar_1*var_2*logvar_3^2'),
+					('var_1^2+var_2*logvar_2*var_3', 'var_1^2+var_2*var_3*logvar_3'),
+					('var_1*var_2*logvar_3*logvar_4', 'logvar_1*logvar_2*var_3*var_4'),
+					('var_1*var_2*logvar_2+var_3', 'var_1*var_2+var_3*logvar_3'),
+					('var_1^2+var_2*var_3', 'var_1*var_2+var_3^2'),
+					('var_1*var_2*var_3^2', 'var_1*var_2^2*var_3'),
+					('var_1*var_2^2*var_3', 'var_1^2*var_2*var_3'),
+					('var_1+var_2^2+var_3', 'var_1+var_2+var_3^2'),
+					('var_1^2*logvar_2*var_3', 'var_1^2*var_2*logvar_3'),
+					('var_1*var_2+var_3*logvar_2+var_3', 'var_1+var_2*logvar_1+var_2*var_3'),
+					('logvar_1*var_2*var_3', 'var_1*logvar_2*var_3'),
+					('var_1*var_2*var_3^2', 'var_1^2*var_2*var_3'),
+					('var_1*logvar_1*var_2*var_3', 'var_1*var_2*var_3*logvar_3'),
+					('var_1*logvar_1+var_2^2', 'var_1+var_2*logvar_2^2'),
+					('var_1^2*var_2*logvar_2', 'var_1*logvar_1*var_2^2'),
+					('var_1*var_2+var_3*var_4', 'var_1+var_2*var_3*var_4'),
+				];
+				if (equivalentPairList.some(pair => pair[0] === complexity1 && pair[1] === complexity2 || pair[0] === complexity2 && pair[1] === complexity1)) {
+					return true;
+				}
+				return complexity1 === complexity2;
+			}
+
+
+
+
+			function clearCanvas() {
+				ctx.clearRect(0, 0, chart.width, chart.height);
+				chart.options.onDraw = null;
+				// if (chart.options.annotations.length > 0) {
+				// 	chart.options.annotations.pop();
+				// }
+				// chart.plugins = [];
+				chart.options.plugins = {};
+				// while(chart.plugins.length > 0){
+				// 	chart.plugins.pop();
+				// }
+				chart.update();
+				$("#modelCorrectSolutionCurve").text("");
+				$("#modelCorrectSolutionCurve").removeClass()
+			}
+
+			function toggleHistogram() {
+				if (showHistogram) {
+					$('#histogram-container').append(chart.canvas);
+					updateChart();
+					clearCanvas();
+					drawTargetLine();
+				} else {
+					clearCanvas();
+					$('#histogram-container').empty();
+				}
+			}
+
+			$.when(
+				$.getJSON('data/tiny_time_test_set_with_notes.json'),
+				$.getJSON('data/tiny_space_test_set_with_notes.json'),
+				$.getJSON('data/model_generations_with_notes.json')
+			).then(function (tinyTimeTestSetData, tinySpaceTestSetData, modelResultsData) {
+				tinyTimeTestSet = tinyTimeTestSetData[0];
+				tinySpaceTestSet = tinySpaceTestSetData[0];
+				modelResults = modelResultsData[0];
+
+				// FOURTH, let's launch the loading of the components!
+				updateModels();
+				updateData();
+				updateButtonStatus();
+			}).fail(function () {
+				console.log('Error loading one or more JSON files');
+			});
+
+			function addColor(number) {
+				var ratio = number / 100;
+				var red = Math.floor(255 * (1 - ratio));
+				var green = Math.floor(255 * ratio);
+				var color = `rgb(${red}, ${green}, 0)`;
+				return color;
+			}
+
+			// FIFTH, let's define the update methods!
+			function updateData() {
+				// first let's find the problem, and by the way update the related variables
+				if (complexityType === "time") {
+					totalProblemCount = Object.keys(tinyTimeTestSet).length;
+				} else {
+					totalProblemCount = Object.keys(tinySpaceTestSet).length;
+				}
+				$("#totalProblemCount").text(totalProblemCount);
+
+				if (currentProblemNumber > totalProblemCount) {
+					currentProblemNumber = 1;
+				}
+				$("#currentProblemNumber").text(currentProblemNumber);
+
+				// now let's get the problem
+				let complexityToProblemDict = (
+					complexityType === "time" ? tinyTimeTestSet : tinySpaceTestSet
+				)[Object.keys(
+					complexityType === "time" ? tinyTimeTestSet : tinySpaceTestSet
+				)[currentProblemNumber - 1]];
+
+				totalComplexityCount = Object.keys(complexityToProblemDict).length;
+				$("#totalComplexityCount").text(totalComplexityCount);
+
+				if (currentComplexityNumber > totalComplexityCount) {
+					currentComplexityNumber = totalComplexityCount;
+				}
+				$("#currentComplexityNumber").text(currentComplexityNumber);
+
+				let problem = complexityToProblemDict[
+					Object.keys(complexityToProblemDict)[currentComplexityNumber - 1]
+				];
+
+				problemName = problem["problem_name"];
+				problemDescription = problem["description"].replace(/\n+/g, '\n');
+				humanSolution = problem["solution_code"];
+				complexity = problem[`${complexityType}_complexity_inferred`];
+
+				$("#problemName").text("Problem: " + problemName);
+				$("#problemDescription").text(problemDescription);
+				$("#humanSolution").text(humanSolution.trim());
+				$("#complexity").text("Solution Complexity Class: " + complexity);
+
+				// handle any note regarding the complexity
+				$("#complexityNote").text("");
+				$("#complexityNote").removeClass();
+				if (problem["framework_note"] != "") {
+					$("#complexityNote").text(problem["framework_note"]);
+					$("#complexityNote").addClass("work-in-progress");
+				} else {
+					$("#complexityNote").addClass("no-work-in-progress");
+
+				}
+
+				// Explain what is happening
+				if (complexityTask === "prediction") {
+					explanationQuery = (
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"The model <strong>"
+						+
+						currentModel
+						+
+						"</strong> is being queried for <strong>"
+						+
+						complexityTask
+						+
+						"</strong> of the <strong>"
+						+
+						complexityType
+						+
+						"</strong> complexity of the reference human solution above, "
+						+
+						"which is a correct human solution to the problem <strong>"
+						+
+						problemName
+						+
+						"</strong> (see problem description above)."
+						+
+						" This human solution has a <strong>"
+						+
+						complexityType
+						+
+						"</strong> complexity of <strong>"
+						+
+						complexity
+						+
+						"</strong>, according to our dynamic complexity inference framework."
+						+
+						" We query the model 20 times in order to measure the Pass@1 accurately."
+						+
+						" We report this metric, along with an example of a correct answer from the model (if it exists), "
+						+
+						" as well as an example of an incorrect answer from the model (if it exists) and the reason why it is wrong."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"You can navigate across problems and solutions/complexity classes while staying in this section by using "
+						+
+						"the left and right arrow keys."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"If you find any LLM output where you disagree with the evaluation framework, feel free to reach out to us, "
+						+
+						"as we are still exploring the limitations and edge cases where the framework can be improved."
+						+
+						"</span><br><br>"
+					)
+				} else if (complexityTask === "generation") {
+					explanationQuery = (
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"The model <strong>"
+						+
+						currentModel
+						+
+						"</strong> is being queried for <strong>"
+						+
+						complexityTask
+						+
+						"</strong> of a correct code solution to the problem <strong>"
+						+
+						problemName
+						+
+						"</strong> (see problem description above)."
+						+
+						" This code solution has to be of <strong>"
+						+
+						complexityType
+						+
+						"</strong> complexity <strong>"
+						+
+						complexity
+						+
+						"</strong>, and this will be verified by our dynamic complexity inference framework."
+						+
+						" We know such solution in such complexity exists (at least as measured by the framework), and an example "
+						+
+						"of a human-generated one is given above."
+						+
+						" To be correct, the solution generated by the model has to both solve the problem and respect the complexity requirement."
+						+
+						" We query the model 20 times in order to measure the Pass@1 accurately, both for correctness and for complexity."
+						+
+						" We report this metric, along with an example of a correct answer from the model (if it exists), "
+						+
+						" as well as an example of an incorrect answer from the model (if it exists) and the reason why it is wrong."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"You can navigate across problems and solutions/complexity classes while staying in this section by using "
+						+
+						"the left and right arrow keys."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"If you find any LLM output where you disagree with the evaluation framework, feel free to reach out to us, "
+						+
+						"as we are still exploring the limitations and edge cases where the framework can be improved."
+						+
+						"</span><br><br>"
+					)
+				} else {
+					explanationQuery = (
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"The model <strong>"
+						+
+						currentModel
+						+
+						"</strong> is being queried for <strong>"
+						+
+						complexityTask
+						+
+						"</strong> of a correct code solution to the problem <strong>"
+						+
+						problemName
+						+
+						"</strong> (see problem description above)."
+						+
+						" This means that the LLM has to generate a solution that responds correctly to the problem, "
+						+
+						" has to be of <strong>"
+						+
+						complexityType
+						+
+						"</strong> complexity <strong>"
+						+
+						complexity
+						+
+						"</strong>, and this will be verified by our dynamic complexity inference framework."
+						+
+						" On top of that, the model is being asked to optimize this solution as much as possible while respecting the "
+						+
+						"complexity requirement. So that we can measure how the generated solution ranks among human solutions."
+						+
+						" We know such solution in such complexity exists (at least as measured by the framework), and an example "
+						+
+						"of a human-generated one is given above."
+						+
+						" To be correct, the solution generated by the model has to both solve the problem and respect the complexity requirement."
+						+
+						" We query the model 20 times in order to measure the Pass@1 accurately, both for correctness and for complexity."
+						+
+						" We report this metric, along with an example of a correct answer from the model (if it exists), "
+						+
+						" as well as an example of an incorrect answer from the model (if it exists) and the reason why it is wrong."
+						+
+						" Finally, if a solution exists, we display using a red dotted line in the graph below how it ranks among human "
+						+
+						"solutions to the same problem and in the same complexity. The more optimized the solution is, the more on the "
+						+
+						"left of the graph it will be."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"You can navigate across problems and solutions/complexity classes while staying in this section by using "
+						+
+						"the left and right arrow keys."
+						+
+						"</span><br><br>"
+						+
+						"<span style=\"font-size=18px !important; white-space: normal; word-wrap: break-word; text-align: justify;\">"
+						+
+						"If you find any LLM output where you disagree with the evaluation framework, feel free to reach out to us, "
+						+
+						"as we are still exploring the limitations and edge cases where the framework can be improved."
+						+
+						"</span><br><br>"
+					)
+				}
+
+				$("#explanationQuery").html(explanationQuery);
+
+				// Now let's handle the scores
+				let modelGenerations = modelResults[complexityType][complexityTask][problemName][complexity][currentModel];
+				let score_html_list = [];
+
+				if (complexityTask === "prediction") {
+					score_html_list.push(
+						"<span style=\"font-size=18px !important;white-space: normal; word-wrap: break-word;\"> Complexity Prediction Pass@1: " + `<span style="font-weight: 500 !important;"><strong style="color: ${addColor(modelGenerations["score_task"])};">${modelGenerations["score_task"].toFixed(2)}%</strong></span>` + "</span><br><br>"
+					);
+				} else if (complexityTask === "generation") {
+					score_html_list.push(
+						"<span style=\"font-size=18px !important;white-space: normal; word-wrap: break-word;\"> Complexity Generation Pass@1: " + `<span style="font-weight: 500 !important;"><strong style="color: ${addColor(modelGenerations["score_task"])};">${modelGenerations["score_task"].toFixed(2)}%</strong></span>` + "</span><br><br>"
+					);
+					score_html_list.push(
+						"<span style=\"font-size=18px !important;white-space: normal; word-wrap: break-word;\"> Program Generation Pass@1: " + `<span style="font-weight: 500 !important;"><strong  style="color: ${addColor(modelGenerations["score_task_prog_synthesis"])};">${modelGenerations["score_task_prog_synthesis"].toFixed(2)}%</strong></span>` + "</span><br><br>"
+					);
+				} else if (complexityTask === "ranking") {
+					score_html_list.push(
+						"<span style=\"font-size=18px !important;white-space: normal; word-wrap: break-word;\"> Complexity Generation Pass@1: " + `<span style="font-weight: 500 !important;"><strong style="color: ${addColor(modelGenerations["score_task"])};">${modelGenerations["score_task"].toFixed(2)}%</strong></span>` + "</span><br><br>"
+					);
+					score_html_list.push(
+						"<span style=\"font-size=18px !important;white-space: normal; word-wrap: break-word;\"> Program Generation Pass@1: " + `<span style="font-weight: 500 !important;"><strong style="color: ${addColor(modelGenerations["score_task_prog_synthesis"])};">${modelGenerations["score_task_prog_synthesis"].toFixed(2)}%</strong></span>` + "</span><br><br>"
+					);
+				}
+
+				modelScore = score_html_list.join('');
+				$("#modelScore").html(modelScore);
+
+				$("#correctNote").text("");
+				$("#correctNote").removeClass()
+				if (modelGenerations["model_output_correct_note"] != "") {
+					$("#correctNote").text(modelGenerations["model_output_correct_note"]);
+					$("#correctNote").addClass("work-in-progress")
+				} else {
+					$("#correctNote").addClass("no-work-in-progress");
+
+				}
+
+				$("#incorrectNote").text("");
+				$("#incorrectNote").removeClass()
+				if (modelGenerations["model_output_incorrect_note"] != "") {
+					$("#incorrectNote").text(modelGenerations["model_output_incorrect_note"]);
+					$("#incorrectNote").addClass("work-in-progress")
+				} else {
+					$("#incorrectNote").addClass("no-work-in-progress");
+
+				}
+
+				// Now let's handle the predictions
+				modelCorrectSolution = modelGenerations["model_output_correct"] || "The model generated no correct solution.";
+				modelIncorrectSolution = modelGenerations["model_output_incorrect"] || "The model generated no incorrect solution.";
+
+				$("#modelCorrectSolution").removeClass();
+				$("#modelIncorrectSolution").removeClass();
+
+				if (modelCorrectSolution == "The model generated no correct solution.") {
+					$("#modelCorrectSolution").addClass("neutral-solution");
+				} else {
+					$("#modelCorrectSolution").addClass("correct-solution");
+				}
+
+				if (modelIncorrectSolution == "The model generated no incorrect solution.") {
+					$("#modelIncorrectSolution").addClass("neutral-solution");
+				} else {
+					$("#modelIncorrectSolution").addClass("incorrect-solution");
+				}
+
+				$("#modelCorrectSolution").text(modelCorrectSolution);
+				$("#modelIncorrectSolution").text(modelIncorrectSolution);
+
+				// let's take care of the incorrect solution
+
+				$("#incorrectSolutionDetails").removeClass();
+				$("#incorrectSolutionDetails2").removeClass();
+				$("#incorrectSolutionDetails").text("");
+				$("#incorrectSolutionDetails2").text("");
+
+				if (modelIncorrectSolution != "The model generated no incorrect solution.") {
+					if (complexityTask === "prediction") {
+						$("#incorrectSolutionDetails").text("Complexity output: ");
+						$("#incorrectSolutionDetails").addClass("incorrect-metric");
+					} else {
+						$("#incorrectSolutionDetails").text("Code passes correctness tests: ");
+						if (modelGenerations["model_output_incorrect_prog_synthesis"] > 50) {
+							$("#incorrectSolutionDetails").addClass("correct-metric");
+						} else {
+							$("#incorrectSolutionDetails").addClass("incorrect-metric");
+						}
+						//$("#incorrectSolutionDetails2").text(
+						//	"Code passes complexity tests: " + (modelGenerations["model_output_incorrect_framework_label"] || "")
+						//);
+						$("#incorrectSolutionDetails2").text(
+							"Code passes complexity tests: "
+						);
+						if (modelGenerations["model_output_incorrect_framework_label"] === null || !secretEqualityComplexitiesImproved(
+							complexity,
+							modelGenerations["model_output_incorrect_framework_label"]
+						)) {
+							$("#incorrectSolutionDetails2").addClass("incorrect-metric");
+						} else {
+							$("#incorrectSolutionDetails2").addClass("correct-metric");
+						}
+
+					}
+				}
+
+				// Now let's take care of the histogram !
+				if (complexityTask === "ranking") {
+					humanCoeffList = problem[`problem_${complexityType}_curve_coefficient_list`];
+					modelCoeff = modelGenerations["model_output_correct_coeff"];
+					showHistogram = true;
+					toggleHistogram();
+				} else {
+					humanCoeffList = [];
+					humanCoeffFiltered = [];
+					modelCoeff = null;
+					showHistogram = false;
+					toggleHistogram();
+				}
+			}
+
+			function updateModels() {
+				// base on the models we find when loading 
+				let tempProblemName = Object.keys(modelResults["time"]["prediction"])[0];
+				let tempComplexity = Object.keys(modelResults["time"]["prediction"][tempProblemName])[0];
+				let modelList = Object.keys(modelResults["time"]["prediction"][tempProblemName][tempComplexity]);
+				let items = modelList.map(m => `<option value="${m}">${m}</option>`);
+				$('#currentModel').html(items);
+			}
+
+			function updateButtonStatus() {
+				// Disable the left button if at the beginning
+				$("#leftButtonProblem").prop("disabled", currentProblemNumber <= 1);
+				$("#rightButtonProblem").prop("disabled", currentProblemNumber >= totalProblemCount);
+				$("#leftButtonComplexity").prop("disabled", currentComplexityNumber <= 1);
+				$("#rightButtonComplexity").prop("disabled", currentComplexityNumber >= totalComplexityCount);
+			}
+
+			// FINALLY, let's define the interactions on the page!
+			$("#leftButtonProblem").click(function () {
+				if (currentProblemNumber > 1) {
+					currentProblemNumber--;
+					$("#currentProblemNumber").text(currentProblemNumber);
+					updateData();
+				}
+				updateButtonStatus();
+			});
+
+			$("#randButtonProblem").click(function () {
+				currentProblemNumber = Math.floor(Math.random() * totalProblemCount) + 1;
+				$("#currentProblemNumber").text(currentProblemNumber);
+				updateData();
+				updateButtonStatus();
+			});
+
+			$("#rightButtonProblem").click(function () {
+				if (currentProblemNumber < totalProblemCount) {
+					currentProblemNumber++;
+					$("#currentProblemNumber").text(currentProblemNumber);
+					updateData();
+				}
+				updateButtonStatus();
+			});
+
+			$("#leftButtonComplexity").click(function () {
+				if (currentComplexityNumber > 1) {
+					currentComplexityNumber--;
+					$("#currentComplexityNumber").text(currentComplexityNumber);
+					updateData();
+				}
+				updateButtonStatus();
+			});
+
+			$("#randButtonComplexity").click(function () {
+				currentComplexityNumber = Math.floor(Math.random() * totalComplexityCount) + 1;
+				$("#currentComplexityNumber").text(currentComplexityNumber);
+				updateData();
+				updateButtonStatus();
+			});
+
+			$("#rightButtonComplexity").click(function () {
+				if (currentComplexityNumber < totalComplexityCount) {
+					currentComplexityNumber++;
+					$("#currentComplexityNumber").text(currentComplexityNumber);
+					updateData();
+				}
+				updateButtonStatus();
+			});
+
+			$(document).keydown(function (e) {
+				switch (e.which) {
+					case 37: // left arrow key
+						if (currentComplexityNumber > 1) {
+							currentComplexityNumber--;
+							$("#currentComplexityNumber").text(currentComplexityNumber);
+							updateData();
+						} else {
+							if (currentProblemNumber > 1) {
+								currentComplexityNumber = 1000;
+								$("#currentComplexityNumber").text(currentComplexityNumber);
+								currentProblemNumber--;
+								$("#currentProblemNumber").text(currentProblemNumber);
+								updateData();
+							}
+						}
+						updateButtonStatus();
+						break;
+					case 39: // right arrow key
+						if (currentComplexityNumber < totalComplexityCount) {
+							currentComplexityNumber++;
+							$("#currentComplexityNumber").text(currentComplexityNumber);
+							updateData();
+						} else {
+							if (currentProblemNumber < totalProblemCount) {
+								currentComplexityNumber = 1;
+								$("#currentComplexityNumber").text(currentComplexityNumber);
+								currentProblemNumber++;
+								$("#currentProblemNumber").text(currentProblemNumber);
+								updateData();
+							}
+						}
+
+						updateButtonStatus();
+						break;
+					default:
+						return; // exit this handler for other keys
+				}
+				e.preventDefault(); // prevent the default action (scroll / move caret)
+			});
+
+			$("#currentModel").change(function () {
+				currentModel = $('#currentModel').val();
+				updateData();
+			});
+
+			// $("#complexityOptions").change(function () {
+			// 	complexityOptions = $('#complexityOptions').val();
+			// 	updateData();
+			// });
+
+			$("input[name='complexityOptions']").change(function () {
+				complexityOptions = $("input[name='complexityOptions']:checked").attr('id');
+				let parts = complexityOptions.split("-");
+				complexityType = parts[0];
+				complexityTask = parts[1];
+				updateData();
+				updateButtonStatus();
+			});
+
+			// $("#complexityType").change(function () {
+			// 	complexityType = $('#complexityType').val();
+			// 	updateData();
+			// });
+
+			// $("#complexityTask").change(function () {
+			// 	complexityTask = $('#complexityTask').val();
+			// 	updateData();
+			// });
+		});
+	</script>
+</body>
+
+</html>

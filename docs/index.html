@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<!-- Copyright (c) Meta Platforms, Inc. and affiliates. -->
+<!-- All rights reserved. -->
+<!-- This source code is licensed under the license found in the LICENSE file in the root directory of this source tree. -->
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="BigOBench: Can LLMs Generate Code with Controlled Time and Space Complexity?">
+  <meta name="keywords" content="code, LLM, code generation, program synthesis">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BigO(Bench)</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="shortcut icon" href="./images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    body {
+      font-family: "JetBrains Mono", monospace;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .publication-authors a {
+      color: #0d6efd !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- <h1 class="title is-2 publication-title"
+              style="font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #000000;">
+              BigO(Bench)</h1> -->
+            <h1 class="title is-3 publication-title"
+              style="font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #000000;">Can LLMs
+              Generate Code with Controlled Time and Space Complexity?</h1>
+            <img src="./images/logo.png" style="max-width: 100%; max-height: 400px; width: auto; height: auto;" />
+            <div class="is-size-5 publication-authors"
+              style="font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #000000;">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=5e_2WW4AAAAJ&hl=fr" style="color: #0d6efd;">Pierre
+                  Chambon</a><sup>1,2</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=6vht2iwAAAAJ&hl=en" style="color: #0d6efd;">Baptiste
+                  Rozière</a><sup>3</sup>,</span>
+              <span class="author-block">
+                <a href="http://alpage.inria.fr/~sagot/" style="color: #0d6efd;">Benoît Sagot</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=wN9rBkcAAAAJ&hl=en" style="color: #0d6efd;">Gabriel
+                  Synnaeve</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-7 publication-authors"
+              style="font-family: 'JetBrains Mono', monospace; background-color: #ffffff; color: #000000;">
+              <span class="author-block" style="margin-right: 20px;"><sup>1</sup>FAIR at Meta</span>
+              <span class="author-block" style="margin-right: 20px;"><sup>2</sup>Inria</span>
+              <span class="author-block" style="margin-right: 20px;"><sup>3</sup>Work done at Meta, now working at
+                Mistral AI</span>
+            </div>
+
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2503.15242" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/facebookresearch/bigobench"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/facebook/BigOBench"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>HF Dataset</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="./leaderboard.html" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa fa-trophy"></i>
+                    </span>
+                    <span>Leaderboard</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="./demo.html" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-search"></i>
+                    </span>
+                    <span>Sample Explorer</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+
+            <br>
+            <img src="./images/benchmark_overview.png" width="100%" />
+            <div class="content has-text-justified" style="font-size: 70%;">
+              <p>
+                <strong>Figure 1</strong> <span style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span>
+                framework overview: Given a coding problem and human solutions, the framework evaluates language models
+                on three key tasks: (1) predicting time-space complexities of existing solutions, (2) generating new
+                code that meets specified complexity requirements, and (3) ranking solutions against human-written code
+                with similar complexity profiles. The complexity framework automatically validates model outputs by
+                computing runtime distributions and curve coefficients.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+            <span>
+                <a href="https://crux-eval.github.io/leaderboard" class="box is-large is-link is-rounded" style="background-color:aquamarine; display:inline-block; font-size:120%; margin-left:1em;">
+                    <span>🏆 CRUXEval Leaderboard 🏆</span>
+                </a>
+            </span>
+            <span>
+                <a href="https://crux-eval.github.io/demo" class="box is-large is-link is-rounded" style="background-color:aquamarine; display:inline-block; font-size:120%; margin-left:1em;">
+                    <span> Sample Explorer </span>
+                </a>
+            </span>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Motivation</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+              We introduce <span style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span>, a novel
+              coding benchmark designed to evaluate the capabilities of generative language models in understanding and
+              generating code with specified time and space complexities.
+              This benchmark addresses the gap in current evaluations that often overlook the ability of models to
+              comprehend and produce code constrained by computational complexity.
+              <span style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span> includes tooling to infer
+              the algorithmic complexity of any Python function from profiling measurements, including human- or
+              LLM-generated solutions.
+              <span style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span> also includes of set of
+              3,105 coding problems and 1,190,250 solutions from Code Contests annotated with inferred (synthetic) time
+              and space complexity labels from the complexity framework, as well as corresponding runtime and memory
+              footprint values for a large set of input sizes.
+              We present results from evaluating multiple state-of-the-art language models on this benchmark,
+              highlighting their strengths and weaknesses in handling complexity requirements.
+              In particular, token-space reasoning models are unrivaled in code generation but not in complexity
+              understanding, hinting that they may not generalize well to tasks for which no reward was given at
+              training time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Contributions</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <ol>
+              <li><strong>Task</strong> Firstly, we introduce three tasks that evaluate a model's understanding of time
+                and space complexities. For a given coding challenge and human solution, the model can be queried to a.
+                predict time-space complexities, b. generate code that solves the challenge while adhering to a
+                specified (known to be feasible) complexity, and c. on top of it ranks better than human solutions of
+                the same challenge and complexity.</li>
+              <li><strong>Dataset</strong> Secondly, we support training and evaluation on these tasks by the release of
+                a dataset of 3,105 coding problems and 1,190,250 solutions from Code Contests, that includes time-space
+                complexity labels, curve coefficients as well as runtime and memory profiling measurements.</li>
+              <li><strong>Framework</strong> Thirdly, we release the code for our complexity inference framework, that
+                takes a Python function and returns time and space complexities. It's a rule-based algorithm based on
+                fuzzing, profiling, and regressing of major complexity classes (including multi-dimensional). This is
+                what we used to produce ground truth labels for <span
+                  style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span>, which are statistically
+                significant ground truth performance profiles and not theoretical complexities. This complexity
+                evaluation framework achieves 92\% and 84\% match (with human annotated theoretical complexity)
+                respectively on the time and space complexity test sets.</li>
+              <li><strong>Benchmark</strong> Fourthly, we evaluate 12 popular models on our benchmark along fined-tuned
+                ones and compare in details their performance: using our All@1 metric, DeepSeek-R1 Llama 70B achieves
+                top scores 41.4% and 4.8% on time complexity prediction and generation, 3.4% on space complexity
+                generation and is outperformed on space prediction by Llama 3.1 405B with 10.3%.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Dynamic Complexity Inference Framework</h2>
+          <img src="./images/framework_overview.png" width="100%" />
+          <div class="content has-text-justified" style="font-size: 70%;">
+            <p>
+              <strong>Figure 2</strong> Outline of the dynamic complexity inference framework. The framework takes a
+              code snippet and a single example of inputs to this code snippet. Then, it processes the code snippet and
+              proceeds with extensive inputs generation, based on the provided example of inputs: inputs are
+              independently or interdependently increased in size, using several expansion methods that can be the
+              identity or random, among else. This forms a queue of synthetic inputs on which to execute the provided
+              code snippet. These executions happen independently in sandboxes, where runtime and memory footprint
+              measures are taken. Once all the measures are collected, the framework can model the code snippet time and
+              space dependencies to the different inputs. Using curve fitting, the time and space complexity of the code
+              is computed on each input separately and then altogether. The global time and space complexity over all
+              inputs is what is being returned.
+            </p>
+          </div>
+          <br><br>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+              The time-space complexity framework is a rule-based algorithm that can process any Python function in
+              order to infer its time and space complexities dynamically. As inputs, it takes a Python function along
+              its function inputs and their corresponding dataclass, which are then processed and modified before being
+              run while runtime and memory footprints are measured.
+              From a high-level perspective, the framework increases the size of inputs following various strategies, in
+              order to assess the impact of their size on execution metrics (e.g. execution time, memory used).
+              When the function has several arguments, they can be expanded independently or together to determine the
+              overall complexity of the function, taking into account potential interdependencies.
+              The prepared code, along with the various sets of expanded inputs are queued up and run in independent
+              sandboxes, using the Bubblewrap library, to avoid any harmful side effects of the code being run. While
+              running, Cprofiler is used for time execution measures and tracemalloc for memory footprint.
+              Using non-negative least squares curve fitting on each set of measures, the coefficients and residuals of
+              each complexity class are computed. The gold complexity class output for a given set of measures is chosen
+              as the minimizer of the residuals, taking into account a simplicity bias (the more simple the complexity
+              class is, the smaller the simplicity bias).
+              This curve fitting is applied on each set of measures, each corresponding to a different subset of
+              arguments being expanded with a different expansion method.
+              Using ensemble methods, the global complexity of the Python function is computed by aggregating the
+              individual complexity outputs along the different set of measures.
+              Finally, the complexity framework also returns the coefficients of the curve of each elected complexity.
+              These coefficients can be leveraged to rank and classify the optimisations of different Python solutions
+              within the same complexity class. More details and set up instructions are shared on Github.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Complexity Tasks</h2>
+          <h2 class="title is-4" style="text-align: left;">Complexity Prediction</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            The first evaluation task of the benchmark, "Complexity Prediction", consists in predicting the time and
+            space complexity given a problem description and a human solution. Our baseline for this task is the naive
+            model that always returns O(n), the most frequent class. Pass@k measures the accuracy of finding the correct
+            complexity; Best@k measures accuracy only across the most optimized complexity class of each problem; All@k
+            requires correct complexity output across all complexity classes at once per problem.
+          </div>
+          <h2 class="title is-4" style="text-align: left;">Complexity Generation</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            The second task "Complexity Generation" requires the LLM to generate a correct solution to a given problem
+            description that has to respect a feasible time or space complexity requirement. Our baseline for this task
+            is a Llama 3.1 70B model that is queried for the same prompts without the complexity requirement. Pass@k
+            measures the accuracy of finding a correct solution, according to public, private and generated tests, that
+            has the correct complexity, as measured by the complexity framework; Best@k and All@k are similarly defined
+            as their counterparts in the results of the first task.
+          </div>
+          <h2 class="title is-4" style="text-align: left;">Complexity Coefficient Percentile Ranking</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            The third task, "Complexity Coefficient Percentile Ranking", measures how a generated solution to a given
+            problem, respecting a complexity requirement, ranks among human solutions of the same complexity class and
+            problem. The ranking is performed based on the coefficient of the complexity curve, as measured by the
+            framework: the lower the coefficient, the more flat the complexity curve and the more optimized the
+            solution. Ranking results are given in percentile of the distribution, where a solution of the nth
+            percentile is more optimized than n% of human solutions. The querying is similar to the second task with the
+            addition of the requirement "Try to optimize the runtime of your code as much as you can, while respecting
+            the time complexity requirement".
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Benchmark Construction</h2>
+        <div class="content has-text-justified" style="font-size: 80%;">
+          <p>
+              The benchmark was constructed as follows:
+              <ol>
+              <li> Using Code Llama 34B, we generate a large set of candidate Python functions and inputs. </li>
+              <li> We filter these candidate functions for samples which a good human programmer should be able to do without extra memory in a minute or so. </li>
+              <li> 800 samples are randomly selected, a size that ensures the benchmark is both small enough to easily run and large enough to reliably compare different models. </li>
+              </ol>
+              We also highlight that as models improve, this generate-and-filter approach can be used to create future benchmarks that are more difficult and test other aspects of program execution.
+          </p>
+        </div>
+        <img src="./images/fig1.png" width="75%"/>
+      </div>
+    </div>
+</section> -->
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Results</h2>
+          <div class="content has-text-justified" style="font-size: 70%;">
+            <p>
+              <strong>Table 1</strong> <span style="font-variant: small-caps;"><strong>BigO(Bench)</strong></span>
+              benchmark results for popular LLMs. <strong>Program Synthesis</strong> checks correctness of
+              model-generated solutions to given programming problems.<strong>Complexity Prediction</strong> measures
+              whether a model can find the time-space complexity of a code snippet. <strong>Complexity
+                Generation</strong> evaluates whether a model outputs a working code snippet to a given problem, that
+              meets a time-space complexity requirement. Pass@k treats all complexity classes of all problems
+              independently, Best@k only evaluates the most optimized complexity class of each problem, All@k measures
+              whether all complexity classes per problem are correct at once.
+            </p>
+          </div>
+          <img src="./images/results_1.png" width="100%" />
+          <br><br>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+              Looking at the above table, all LLMs undergo a noticeable drop of performance on the combined task
+              "Complexity Generation" compared to the individual tasks "Program Synthesis" and "Complexity Prediction".
+              Across all tasks, the top performing model remains DeepSeek-R1 Llama 70B with 64.2 and 29.2 Pass@1 on
+              respectively time prediction and generation, except on space prediction where models tend to overthink and
+              misunderstand the notion of extra space complexity, though explicitly described in the test prompts.
+              Models tend to be even more misled when asked to "Optimize the solution while respecting the complexity
+              requirement", which leads to average 12% loss of performance for time generation All@1 in Table:
+              Coefficient Ranking, up to ~30% for GPT-4o and o1-mini.
+            </p>
+          </div>
+          <br><br>
+          <div class="content has-text-justified" style="font-size: 70%;">
+            <p>
+              <strong>Table 2</strong> Using the complexity framework, the best measured coefficient of the complexity
+              curve, out of 20 attempts, is used to rank LLM-generated code among human solutions from the same problem
+              and time-space complexity class. Ranking is percentile based, n% ranking score amounts for n% human
+              solutions having worse complexity coefficient. If no LLM solution passes correctness tests, ranking score
+              is set to 0. INTERSEC is the subset where all starred models have at least one successful solution.
+            </p>
+          </div>
+          <img src="./images/results_2.png" width="50%" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Insights</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                For base models, performance on HumanEval and CRUXEval are correlated. However, 
+                finetuning breaks this correlation: distilled models (WizardCoder, Phind, Phi)
+                significantly beat their base models on HumanEval but not CRUXEval.
+            </p>
+          </div>
+          <img src="./images/fig4.png" width="75%"/>
+          <br>
+          <br> 
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                Performance on CRUXEval-I and CRUXEval-O are very correlated. Because the 
+                tasks seem relatively different, this suggests that the code reasoning capabilities 
+                of models may generalize across tasks.
+            </p>
+          </div>
+          <img src="./images/fig5.png" width="50%"/>
+          <br>
+          <br> 
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                When comparing the predictions of different models, strong positive correlations
+                are seen between sizes of the same model, between models of the same size, and 
+                between instruct and base models. On average, samples that are harder for one model
+                tend to be harder for other models, but worse models succeed on some examples where
+                better models fail completely, showing the idiosyncrasies of each model's failures.
+            </p>
+          </div>
+          <img src="./images/fig6.png" width="85%"/>
+          <br>
+          <br> 
+        </div>
+      </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Chain of Thought</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                Using CoT led to some improvements, with larger boosts on output prediction 
+                than input prediction. GPT-4 benefits significantly more from CoT than other 
+                models, achieving the highest pass@1 of 74.8% on input prediction and 81.9% on 
+                output prediction.
+            </p>
+          </div>
+          <img src="./images/fig7.png" width="60%"/>
+          <br>
+          <br> 
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                CoT increases the diversity of generated inputs and outputs, so models 
+                with CoT see a larger gap between pass@1 and pass@5 score compared to 
+                models without.
+            </p>
+          </div>
+          <img src="./images/fig8.png" width="75%"/>
+          <br>
+          <br> 
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                We also investigate the impact of CoT on individual samples. We classify a 
+                model's performance on an example as “poor” if the model gets that example 
+                wrong over half the time, and “good” otherwise. For Code Llama 13B/34B and GPT-3.5,
+                we find many individual samples where CoT actually hurts the prediction accuracy. 
+                This is less the case for GPT-4, where CoT improves performance for most samples.
+            </p>
+          </div>
+          <img src="./images/fig9.png" width="75%"/>
+        </div>
+      </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Fine-Tuning</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                After fine-tuning Code Llama 34B on assertions very similar to those in
+                our benchmark, it can match the performance of GPT-4 on both input and 
+                output prediction. However, accuracy plateaus at under 70% for both tasks, 
+                so simple finetuning is far from solving the benchmark.
+            </p>
+          </div>
+          <img src="./images/fig10.png" width="75%"/>
+        </div>
+      </div>
+  </section>
+
+  <section class="section" style="margin-bottom: 0; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">GPT-4 Failures</h2>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p>
+                While GPT-4 performs the best on our benchmark, we still find simple programs 
+                for which it fails to execute correctly even with CoT, such as the ones shown below.
+            </p>
+          </div>
+          <img src="./images/fig11.png" width="75%"/>
+          <br>
+          <br>
+          <div class="content has-text-justified" style="font-size: 80%;">
+            <p> <b>
+                Overall, we believe that CRUXEval provides a complementary perspective to
+                classical code LM evaluations such as HumanEval and MBPP and encourage creators 
+                of future code LMs to evaluate on our benchmark!
+            </b> </p>
+          </div>
+        </div>
+      </div>
+  </section> -->
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+@misc{chambon2025bigobenchllmsgenerate,
+  title={BigO(Bench) -- Can LLMs Generate Code with Controlled Time and Space Complexity?}, 
+  author={Pierre Chambon and Baptiste Roziere and Benoit Sagot and Gabriel Synnaeve},
+  year={2025},
+  eprint={2503.15242},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2503.15242}, 
+}
+</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <!-- <div class="content has-text-centered">
+    <a class="icon-link"
+       href="./static/videos/nerfies_paper.pdf">
+      <i class="fas fa-file-pdf"></i>
+    </a>
+    <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+      <i class="fab fa-github"></i>
+    </a>
+    </div> -->
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              The source code from this website is borrowed from <a
+                href="https://github.com/nerfies/nerfies.github.io">this template</a>, <a
+                href="https://minerva-demo.github.io">Minerva sample explorer</a>, <a
+                href="https://llemma-demo.github.io/">Llemma</a>, <a href="https://crux-eval.github.io/">CRUXEval</a>
+              and <a href="https://evalplus.github.io/leaderboard.html">EvalPlus</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
