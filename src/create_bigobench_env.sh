@@ -43,7 +43,8 @@ pip install vllm ipython fire
 pip install numpy typeguard tenacity openai httpx tree_sitter 
 
 pip install contourpy cycler fonttools joblib kiwisolver matplotlib \
-    pyparsing python-dateutil scikit-learn scipy six threadpoolctl
+    pyparsing python-dateutil scikit-learn scipy six threadpoolctl \
+    pytest
 
 cat << EOF
 

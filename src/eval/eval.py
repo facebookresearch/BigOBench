@@ -127,7 +127,10 @@ class OpenAIGen():
                     if not future.done():
                         continue
                 ret = future.result()
-                reply = ret.choices[0].message.content
+                try:
+                    reply = ret.choices[0].message.content
+                except:
+                    reply = ret
                 res = Packet(
                     thread_id=thread_id,
                     text=reply,
@@ -240,45 +243,52 @@ class OpenAIGen():
                         print(f"{client.base_url} API Error {attempt_index}: {e}")
                         raise
 
-        except RetryError:
-            for attempt_index, attempt in enumerate(Retrying(wait=wait_fixed(1), stop=stop_after_attempt(6))):
-                print('tryping an attempt with default behavior', attempt_index)
-                with attempt:
-                    client = random.choice(self.client_list)
-                    messages = deepcopy(messages)
+        except: # RetryError
+            try:
+                for attempt_index, attempt in enumerate(Retrying(wait=wait_fixed(1), stop=stop_after_attempt(1))):
+                    print('tryping an attempt with default behavior', attempt_index)
+                    with attempt:
+                        client = random.choice(self.client_list)
+                        messages = deepcopy(messages)
 
-                    # In certain cases, reasoning does not converge so we conclude with a dummy request
-                    for i, x in enumerate(messages):
-                        if x["role"] == "user":
-                            messages[i]["content"] = "Hi !"
+                        # In certain cases, reasoning does not converge so we conclude with a dummy request
+                        for i, x in enumerate(messages):
+                            if x["role"] == "user":
+                                messages[i]["content"] = "Hi !"
 
-                    try:
-                        response = (
-                            client.chat.completions.create(
-                                model=model_name_or_path,
-                                messages=messages,
-                                temperature=temperature,
-                                max_tokens=max_tokens,
-                                top_p=top_p,
-                                **model_args,
-                            ) 
-                            if not self.args.light_request_arguments 
-                            else client.chat.completions.create(
-                                model=model_name_or_path,
-                                messages=list(
-                                    filter(
-                                        lambda x: x["role"] in ["user", "assistant"], messages
-                                    )
-                                ),
-                                max_completion_tokens=max_tokens,
-                            ) 
-                        )
+                        try:
+                            response = (
+                                client.chat.completions.create(
+                                    model=model_name_or_path,
+                                    messages=messages,
+                                    temperature=temperature,
+                                    max_tokens=max_tokens,
+                                    top_p=top_p,
+                                    **model_args,
+                                ) 
+                                if not self.args.light_request_arguments 
+                                else client.chat.completions.create(
+                                    model=model_name_or_path,
+                                    messages=list(
+                                        filter(
+                                            lambda x: x["role"] in ["user", "assistant"], messages
+                                        )
+                                    ),
+                                    max_completion_tokens=max_tokens,
+                                ) 
+                            )
 
-                        return response  # , cost
-                        
-                    except Exception as e:
-                        print(f"{client.base_url} API Error {attempt_index} ON RETRY: {e}")
-                        raise
+                            return response  # , cost
+                            
+                        except Exception as e:
+                            print(f"{client.base_url} API Error {attempt_index} ON RETRY: {e}")
+                            raise
+            except:
+                print("NO SOLUTION FOUND")
+    
+                return "Hello, it's nice to meet you. Is there something I can help you with or would you like to chat?"
+
+
 
 
 def tp_task_evaluation(
