@@ -619,10 +619,10 @@
       // filter out Null only for the column of interest and then sort
       data = globalData
         .filter((row) => {
-          return row[complexityType][complexityTask][headers[headers.length - 1]] != null;
+          return row[complexityType][complexityTask][headers[(complexityTask != "ranking" ? headers.length - 1 : 1)]] != null;
         })
         .sort((a, b) => {
-          return b[complexityType][complexityTask][headers[headers.length - 1]] - a[complexityType][complexityTask][headers[headers.length - 1]];
+          return b[complexityType][complexityTask][headers[(complexityTask != "ranking" ? headers.length - 1 : 1)]] - a[complexityType][complexityTask][headers[(complexityTask != "ranking" ? headers.length - 1 : 1)]];
         });
 
       var thead = document.createElement("thead");
