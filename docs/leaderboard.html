@@ -619,10 +619,10 @@
       // filter out Null only for the column of interest and then sort
       data = globalData
         .filter((row) => {
-          return row[complexityType][complexityTask][headers[-1]] != null;
+          return row[complexityType][complexityTask][headers[headers.length - 1]] != null;
         })
         .sort((a, b) => {
-          return b[complexityType][complexityTask][headers[-1]] - a[complexityType][complexityTask][headers[-1]];
+          return b[complexityType][complexityTask][headers[headers.length - 1]] - a[complexityType][complexityTask][headers[headers.length - 1]];
         });
 
       var thead = document.createElement("thead");
@@ -727,10 +727,10 @@
       // filter out Null only for the column of interest and then sort
       const data = globalData
         .filter((row) => {
-          return row[complexityType][complexityTask][headers[1]] != null;
+          return row[complexityType][complexityTask][headers[headers.length - 1]] != null;
         })
         .sort((a, b) => {
-          return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+          return b[complexityType][complexityTask][headers[headers.length - 1]] - a[complexityType][complexityTask][headers[headers.length - 1]];
         });
 
       // // sort first
@@ -769,7 +769,7 @@
       nonSizeModels.forEach((model) => {
         chartOption.series[0].markLine.data.push({
           name: model["Model"],
-          yAxis: model[complexityType][complexityTask][headers[1]],
+          yAxis: model[complexityType][complexityTask][headers[headers.length - 1]],
         });
       });
 
@@ -777,7 +777,7 @@
         series.forEach((model) => {
           chartOption.series[idx].data.push({
             name: model["Model"],
-            value: [`${Math.round(model["size"])}`, model[complexityType][complexityTask][headers[1]]],
+            value: [`${Math.round(model["size"])}`, model[complexityType][complexityTask][headers[headers.length - 1]]],
           });
         });
       });
@@ -794,7 +794,7 @@
         const bestPromptedModel = promptedModels
           .filter((model) => Math.round(model["size"]) == size)
           .sort((a, b) => {
-            return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+            return b[complexityType][complexityTask][headers[headers.length - 1]] - a[complexityType][complexityTask][headers[headers.length - 1]];
           })[0];
         const hightLightBest = (series, model) => {
           const point = chartOption.series[series].data.find(
