@@ -1,1 +1,482 @@
-{"Llama 3.1 8B": {"link": "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct", "size": 8.0, "time": {"prediction": {"pass@1": 46.5, "best@1": 58.3, "all@1": 21.8}, "generation": {"pass@1": 5.2, "pass@10": 16.5, "best@1": 7.7, "all@1": 0.6}, "ranking": {"coeffFull": 13.9, "coeffIntersect": 43.2, "all@1": 0.5}}, "space": {"prediction": {"pass@1": 36.6, "best@1": 40.3, "all@1": 7.9}, "generation": {"pass@1": 5.4, "pass@10": 16.1, "best@1": 7.9, "all@1": 0.5}, "ranking": {"coeffFull": 14.7, "coeffIntersect": 49.3, "all@1": 0.8}}}, "Llama 3.1 70B": {"link": "https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct", "size": 70.0, "time": {"prediction": {"pass@1": 57.2, "best@1": 68.9, "all@1": 33.8}, "generation": {"pass@1": 14.2, "pass@10": 34.8, "best@1": 20.3, "all@1": 3.1}, "ranking": {"coeffFull": 28.3, "coeffIntersect": 74.1, "all@1": 2.5}}, "space": {"prediction": {"pass@1": 42.5, "best@1": 56.1, "all@1": 11.9}, "generation": {"pass@1": 11.7, "pass@10": 33.0, "best@1": 17.2, "all@1": 1.8}, "ranking": {"coeffFull": 26.9, "coeffIntersect": 86.1, "all@1": 1.1}}}, "Llama 3.3 70B": {"link": "https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct", "size": 70.0, "time": {"prediction": {"pass@1": 58.2, "best@1": 72.6, "all@1": 33.7}, "generation": {"pass@1": 17.7, "pass@10": 40.0, "best@1": 25.7, "all@1": 3.3}, "ranking": {"coeffFull": 33.8, "coeffIntersect": 74.3, "all@1": 2.8}}, "space": {"prediction": {"pass@1": 41.1, "best@1": 55.2, "all@1": 10.9}, "generation": {"pass@1": 15.0, "pass@10": 37.7, "best@1": 21.9, "all@1": 1.8}, "ranking": {"coeffFull": 32.8, "coeffIntersect": 79.1, "all@1": 1.6}}}, "Llama 3.1 405B": {"link": "https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct", "size": 405.0, "time": {"prediction": {"pass@1": 60.9, "best@1": 72.8, "all@1": 38.3}, "generation": {"pass@1": 19.5, "pass@10": 43.6, "best@1": 26.4, "all@1": 4.2}, "ranking": {"coeffFull": 33.9, "coeffIntersect": 78.4, "all@1": 4.3}}, "space": {"prediction": {"pass@1": 44.8, "best@1": 58.9, "all@1": 14.0}, "generation": {"pass@1": 16.1, "pass@10": 42.0, "best@1": 22.6, "all@1": 2.7}, "ranking": {"coeffFull": 35.5, "coeffIntersect": 85.4, "all@1": 2.2}}}, "Codestral 22B": {"link": "https://huggingface.co/mistralai/Codestral-22B-v0.1", "size": 22.0, "time": {"prediction": {"pass@1": 56.0, "best@1": 67.8, "all@1": 33.5}, "generation": {"pass@1": 10.6, "pass@10": 26.6, "best@1": 14.9, "all@1": 1.3}, "ranking": {"coeffFull": 21.6, "coeffIntersect": 58.6, "all@1": 1.5}}, "space": {"prediction": {"pass@1": 44.3, "best@1": 62.5, "all@1": 10.6}, "generation": {"pass@1": 11.0, "pass@10": 29.4, "best@1": 16.7, "all@1": 1.3}, "ranking": {"coeffFull": 25.2, "coeffIntersect": 71.2, "all@1": 1.2}}}, "GPT-4o": {"link": "https://platform.openai.com/docs/models", "size": null, "time": {"prediction": {"pass@1": 57.7, "best@1": 69.7, "all@1": 33.1}, "generation": {"pass@1": 20.6, "pass@10": 44.7, "best@1": 30.2, "all@1": 4.3}, "ranking": {"coeffFull": 36.6, "coeffIntersect": 71.8, "all@1": 4.2}}, "space": {"prediction": {"pass@1": 43.4, "best@1": 61.4, "all@1": 11.0}, "generation": {"pass@1": 18.1, "pass@10": 39.9, "best@1": 28.0, "all@1": 1.4}, "ranking": {"coeffFull": 31.6, "coeffIntersect": 84.1, "all@1": 1.3}}}, "o1-mini": {"link": "https://platform.openai.com/docs/models", "size": null, "time": {"prediction": {"pass@1": 58.3, "best@1": 65.2, "all@1": 35.6}, "generation": {"pass@1": 19.8, "pass@10": 65.2, "best@1": 27.6, "all@1": 4.5}, "ranking": {"coeffFull": 26.3, "coeffIntersect": 79.3, "all@1": 3.1}}, "space": {"prediction": {"pass@1": 42.7, "best@1": 45.6, "all@1": 8.1}, "generation": {"pass@1": 16.6, "pass@10": 61.3, "best@1": 25.7, "all@1": 2.5}, "ranking": {"coeffFull": 21.1, "coeffIntersect": 81.6, "all@1": 1.5}}}, "Qwen2.5-Coder 32B": {"link": "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct", "size": 32.0, "time": {"prediction": {"pass@1": 58.5, "best@1": 68.2, "all@1": 34.9}, "generation": {"pass@1": 12.2, "pass@10": 26.5, "best@1": 15.2, "all@1": 3.1}, "ranking": {"coeffFull": 19.7, "coeffIntersect": 51.4, "all@1": 2.2}}, "space": {"prediction": {"pass@1": 45.6, "best@1": 63.4, "all@1": 12.6}, "generation": {"pass@1": 10.1, "pass@10": 23.3, "best@1": 15.3, "all@1": 1.2}, "ranking": {"coeffFull": 20.5, "coeffIntersect": 74.8, "all@1": 0.6}}}, "DeepSeekCoderV2 236B": {"link": "https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Instruct-0724", "size": 21.0, "time": {"prediction": {"pass@1": 54.9, "best@1": 68.9, "all@1": 29.6}, "generation": {"pass@1": 19.5, "pass@10": 38.0, "best@1": 27.6, "all@1": 3.3}, "ranking": {"coeffFull": 27.7, "coeffIntersect": 59.2, "all@1": 2.8}}, "space": {"prediction": {"pass@1": 44.1, "best@1": 59.6, "all@1": 8.2}, "generation": {"pass@1": 16.7, "pass@10": 34.5, "best@1": 25.6, "all@1": 1.0}, "ranking": {"coeffFull": 26.8, "coeffIntersect": 69.7, "all@1": 1.2}}}, "DeepSeekV3 671B": {"link": "https://huggingface.co/deepseek-ai/DeepSeek-V3", "size": 37.0, "time": {"prediction": {"pass@1": 54.4, "best@1": 72.4, "all@1": 27.1}, "generation": {"pass@1": 17.7, "pass@10": 37.7, "best@1": 23.0, "all@1": 3.4}, "ranking": {"coeffFull": 28.7, "coeffIntersect": 63.1, "all@1": 3.4}}, "space": {"prediction": {"pass@1": 43.5, "best@1": 62.6, "all@1": 11.2}, "generation": {"pass@1": 15.0, "pass@10": 35.4, "best@1": 22.6, "all@1": 1.6}, "ranking": {"coeffFull": 27.2, "coeffIntersect": 75.2, "all@1": 1.3}}}, "DeepSeekR1 Qwen 32B": {"link": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "size": 32.0, "time": {"prediction": {"pass@1": 62.2, "best@1": 72.7, "all@1": 41.1}, "generation": {"pass@1": 29.0, "pass@10": 49.9, "best@1": 46.1, "all@1": 4.8}, "ranking": {"coeffFull": 38.6, "coeffIntersect": 79.6, "all@1": 4.2}}, "space": {"prediction": {"pass@1": 43.2, "best@1": 55.0, "all@1": 8.1}, "generation": {"pass@1": 24.8, "pass@10": 48.6, "best@1": 38.6, "all@1": 3.1}, "ranking": {"coeffFull": 40.1, "coeffIntersect": 84.6, "all@1": 3.0}}}, "DeepSeekR1 Llama 70B": {"link": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B", "size": 70.0, "time": {"prediction": {"pass@1": 64.2, "best@1": 75.4, "all@1": 41.4}, "generation": {"pass@1": 29.2, "pass@10": 51.6, "best@1": 46.5, "all@1": 4.8}, "ranking": {"coeffFull": 38.3, "coeffIntersect": 79.2, "all@1": 4.0}}, "space": {"prediction": {"pass@1": 44.4, "best@1": 56.1, "all@1": 10.4}, "generation": {"pass@1": 25.6, "pass@10": 50.0, "best@1": 38.7, "all@1": 3.4}, "ranking": {"coeffFull": 41.6, "coeffIntersect": 86.9, "all@1": 3.3}}}}
+{
+    "Llama 3.1 8B": {
+        "link": "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct",
+        "size": 8.0,
+        "time": {
+            "prediction": {
+                "pass@1": 46.5,
+                "best@1": 58.3,
+                "all@1": 21.8
+            },
+            "generation": {
+                "pass@1": 5.2,
+                "pass@10": 16.5,
+                "best@1": 7.7,
+                "all@1": 0.6
+            },
+            "ranking": {
+                "coeffFull": 13.9,
+                "coeffIntersect": 43.2,
+                "all@1": 0.5
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 36.6,
+                "best@1": 40.3,
+                "all@1": 7.9
+            },
+            "generation": {
+                "pass@1": 5.4,
+                "pass@10": 16.1,
+                "best@1": 7.9,
+                "all@1": 0.5
+            },
+            "ranking": {
+                "coeffFull": 14.7,
+                "coeffIntersect": 49.3,
+                "all@1": 0.8
+            }
+        }
+    },
+    "Llama 3.1 70B": {
+        "link": "https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct",
+        "size": 70.0,
+        "time": {
+            "prediction": {
+                "pass@1": 57.2,
+                "best@1": 68.9,
+                "all@1": 33.8
+            },
+            "generation": {
+                "pass@1": 14.2,
+                "pass@10": 34.8,
+                "best@1": 20.3,
+                "all@1": 3.1
+            },
+            "ranking": {
+                "coeffFull": 28.3,
+                "coeffIntersect": 74.1,
+                "all@1": 2.5
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 42.5,
+                "best@1": 56.1,
+                "all@1": 11.9
+            },
+            "generation": {
+                "pass@1": 11.7,
+                "pass@10": 33.0,
+                "best@1": 17.2,
+                "all@1": 1.8
+            },
+            "ranking": {
+                "coeffFull": 26.9,
+                "coeffIntersect": 86.1,
+                "all@1": 1.1
+            }
+        }
+    },
+    "Llama 3.3 70B": {
+        "link": "https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct",
+        "size": 70.0,
+        "time": {
+            "prediction": {
+                "pass@1": 58.2,
+                "best@1": 72.6,
+                "all@1": 33.7
+            },
+            "generation": {
+                "pass@1": 17.7,
+                "pass@10": 40.0,
+                "best@1": 25.7,
+                "all@1": 3.3
+            },
+            "ranking": {
+                "coeffFull": 33.8,
+                "coeffIntersect": 74.3,
+                "all@1": 2.8
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 41.1,
+                "best@1": 55.2,
+                "all@1": 10.9
+            },
+            "generation": {
+                "pass@1": 15.0,
+                "pass@10": 37.7,
+                "best@1": 21.9,
+                "all@1": 1.8
+            },
+            "ranking": {
+                "coeffFull": 32.8,
+                "coeffIntersect": 79.1,
+                "all@1": 1.6
+            }
+        }
+    },
+    "Llama 3.1 405B": {
+        "link": "https://huggingface.co/meta-llama/Llama-3.1-405B-Instruct",
+        "size": 405.0,
+        "time": {
+            "prediction": {
+                "pass@1": 60.9,
+                "best@1": 72.8,
+                "all@1": 38.3
+            },
+            "generation": {
+                "pass@1": 19.5,
+                "pass@10": 43.6,
+                "best@1": 26.4,
+                "all@1": 4.2
+            },
+            "ranking": {
+                "coeffFull": 33.9,
+                "coeffIntersect": 78.4,
+                "all@1": 4.3
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.8,
+                "best@1": 58.9,
+                "all@1": 14.0
+            },
+            "generation": {
+                "pass@1": 16.1,
+                "pass@10": 42.0,
+                "best@1": 22.6,
+                "all@1": 2.7
+            },
+            "ranking": {
+                "coeffFull": 35.5,
+                "coeffIntersect": 85.4,
+                "all@1": 2.2
+            }
+        }
+    },
+    "Codestral 22B": {
+        "link": "https://huggingface.co/mistralai/Codestral-22B-v0.1",
+        "size": 22.0,
+        "time": {
+            "prediction": {
+                "pass@1": 56.0,
+                "best@1": 67.8,
+                "all@1": 33.5
+            },
+            "generation": {
+                "pass@1": 10.6,
+                "pass@10": 26.6,
+                "best@1": 14.9,
+                "all@1": 1.3
+            },
+            "ranking": {
+                "coeffFull": 21.6,
+                "coeffIntersect": 58.6,
+                "all@1": 1.5
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.3,
+                "best@1": 62.5,
+                "all@1": 10.6
+            },
+            "generation": {
+                "pass@1": 11.0,
+                "pass@10": 29.4,
+                "best@1": 16.7,
+                "all@1": 1.3
+            },
+            "ranking": {
+                "coeffFull": 25.2,
+                "coeffIntersect": 71.2,
+                "all@1": 1.2
+            }
+        }
+    },
+    "GPT-4o": {
+        "link": "https://platform.openai.com/docs/models",
+        "size": null,
+        "time": {
+            "prediction": {
+                "pass@1": 57.7,
+                "best@1": 69.7,
+                "all@1": 33.1
+            },
+            "generation": {
+                "pass@1": 20.6,
+                "pass@10": 44.7,
+                "best@1": 30.2,
+                "all@1": 4.3
+            },
+            "ranking": {
+                "coeffFull": 36.6,
+                "coeffIntersect": 71.8,
+                "all@1": 4.2
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 43.4,
+                "best@1": 61.4,
+                "all@1": 11.0
+            },
+            "generation": {
+                "pass@1": 18.1,
+                "pass@10": 39.9,
+                "best@1": 28.0,
+                "all@1": 1.4
+            },
+            "ranking": {
+                "coeffFull": 31.6,
+                "coeffIntersect": 84.1,
+                "all@1": 1.3
+            }
+        }
+    },
+    "o1-mini": {
+        "link": "https://platform.openai.com/docs/models",
+        "size": null,
+        "time": {
+            "prediction": {
+                "pass@1": 58.3,
+                "best@1": 65.2,
+                "all@1": 35.6
+            },
+            "generation": {
+                "pass@1": 19.8,
+                "pass@10": 65.2,
+                "best@1": 27.6,
+                "all@1": 4.5
+            },
+            "ranking": {
+                "coeffFull": 26.3,
+                "coeffIntersect": 79.3,
+                "all@1": 3.1
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 42.7,
+                "best@1": 45.6,
+                "all@1": 8.1
+            },
+            "generation": {
+                "pass@1": 16.6,
+                "pass@10": 61.3,
+                "best@1": 25.7,
+                "all@1": 2.5
+            },
+            "ranking": {
+                "coeffFull": 21.1,
+                "coeffIntersect": 81.6,
+                "all@1": 1.5
+            }
+        }
+    },
+    "Qwen2.5-Coder 32B": {
+        "link": "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct",
+        "size": 32.0,
+        "time": {
+            "prediction": {
+                "pass@1": 58.5,
+                "best@1": 68.2,
+                "all@1": 34.9
+            },
+            "generation": {
+                "pass@1": 12.2,
+                "pass@10": 26.5,
+                "best@1": 15.2,
+                "all@1": 3.1
+            },
+            "ranking": {
+                "coeffFull": 19.7,
+                "coeffIntersect": 51.4,
+                "all@1": 2.2
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 45.6,
+                "best@1": 63.4,
+                "all@1": 12.6
+            },
+            "generation": {
+                "pass@1": 10.1,
+                "pass@10": 23.3,
+                "best@1": 15.3,
+                "all@1": 1.2
+            },
+            "ranking": {
+                "coeffFull": 20.5,
+                "coeffIntersect": 74.8,
+                "all@1": 0.6
+            }
+        }
+    },
+    "DeepSeekCoderV2 236B": {
+        "link": "https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Instruct-0724",
+        "size": 21.0,
+        "time": {
+            "prediction": {
+                "pass@1": 54.9,
+                "best@1": 68.9,
+                "all@1": 29.6
+            },
+            "generation": {
+                "pass@1": 19.5,
+                "pass@10": 38.0,
+                "best@1": 27.6,
+                "all@1": 3.3
+            },
+            "ranking": {
+                "coeffFull": 27.7,
+                "coeffIntersect": 59.2,
+                "all@1": 2.8
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.1,
+                "best@1": 59.6,
+                "all@1": 8.2
+            },
+            "generation": {
+                "pass@1": 16.7,
+                "pass@10": 34.5,
+                "best@1": 25.6,
+                "all@1": 1.0
+            },
+            "ranking": {
+                "coeffFull": 26.8,
+                "coeffIntersect": 69.7,
+                "all@1": 1.2
+            }
+        }
+    },
+    "DeepSeekV3 671B": {
+        "link": "https://huggingface.co/deepseek-ai/DeepSeek-V3",
+        "size": 37.0,
+        "time": {
+            "prediction": {
+                "pass@1": 54.4,
+                "best@1": 72.4,
+                "all@1": 27.1
+            },
+            "generation": {
+                "pass@1": 17.7,
+                "pass@10": 37.7,
+                "best@1": 23.0,
+                "all@1": 3.4
+            },
+            "ranking": {
+                "coeffFull": 28.7,
+                "coeffIntersect": 63.1,
+                "all@1": 3.4
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 43.5,
+                "best@1": 62.6,
+                "all@1": 11.2
+            },
+            "generation": {
+                "pass@1": 15.0,
+                "pass@10": 35.4,
+                "best@1": 22.6,
+                "all@1": 1.6
+            },
+            "ranking": {
+                "coeffFull": 27.2,
+                "coeffIntersect": 75.2,
+                "all@1": 1.3
+            }
+        }
+    },
+    "DeepSeekR1 Qwen 32B": {
+        "link": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+        "size": 32.0,
+        "time": {
+            "prediction": {
+                "pass@1": 62.2,
+                "best@1": 72.7,
+                "all@1": 41.1
+            },
+            "generation": {
+                "pass@1": 29.0,
+                "pass@10": 49.9,
+                "best@1": 46.1,
+                "all@1": 4.8
+            },
+            "ranking": {
+                "coeffFull": 38.6,
+                "coeffIntersect": 79.6,
+                "all@1": 4.2
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 43.2,
+                "best@1": 55.0,
+                "all@1": 8.1
+            },
+            "generation": {
+                "pass@1": 24.8,
+                "pass@10": 48.6,
+                "best@1": 38.6,
+                "all@1": 3.1
+            },
+            "ranking": {
+                "coeffFull": 40.1,
+                "coeffIntersect": 84.6,
+                "all@1": 3.0
+            }
+        }
+    },
+    "DeepSeekR1 Llama 70B": {
+        "link": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+        "size": 70.0,
+        "time": {
+            "prediction": {
+                "pass@1": 64.2,
+                "best@1": 75.4,
+                "all@1": 41.4
+            },
+            "generation": {
+                "pass@1": 29.2,
+                "pass@10": 51.6,
+                "best@1": 46.5,
+                "all@1": 4.8
+            },
+            "ranking": {
+                "coeffFull": 38.3,
+                "coeffIntersect": 79.2,
+                "all@1": 4.0
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.4,
+                "best@1": 56.1,
+                "all@1": 10.4
+            },
+            "generation": {
+                "pass@1": 25.6,
+                "pass@10": 50.0,
+                "best@1": 38.7,
+                "all@1": 3.4
+            },
+            "ranking": {
+                "coeffFull": 41.6,
+                "coeffIntersect": 86.9,
+                "all@1": 3.3
+            }
+        }
+    }
+}

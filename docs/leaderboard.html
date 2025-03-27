@@ -341,7 +341,7 @@
             All models are evaluated using their instruct variant, when available, in a zero-shot fashion.
           </li>
           <li>
-            Models are ranked according to pass@1 using greedy decoding. All models use temperature 0.8, except
+            Models are ranked according to all@1 using greedy decoding. All models use temperature 0.8, except
             DeepSeekR1-variants that use temperature 0.6.
           </li>
           <li>
@@ -497,7 +497,7 @@
 
     var chartOption = {
       legend: {
-        data: ["pass@1"],
+        data: ["all@1"],
       },
       grid: {
         left: "1%",
@@ -517,7 +517,7 @@
         },
       },
       yAxis: {
-        name: "PASS@1 (greedy decoding)",
+        name: "ALL@1 (greedy decoding)",
         type: "value",
         show: true,
         nameTextStyle: {
@@ -619,10 +619,10 @@
       // filter out Null only for the column of interest and then sort
       data = globalData
         .filter((row) => {
-          return row[complexityType][complexityTask][headers[1]] != null;
+          return row[complexityType][complexityTask][headers[-1]] != null;
         })
         .sort((a, b) => {
-          return b[complexityType][complexityTask][headers[1]] - a[complexityType][complexityTask][headers[1]];
+          return b[complexityType][complexityTask][headers[-1]] - a[complexityType][complexityTask][headers[-1]];
         });
 
       var thead = document.createElement("thead");
