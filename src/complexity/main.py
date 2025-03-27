@@ -1361,9 +1361,9 @@ def run_complexity_framework(
                     "problem_id": all_full_question["problem_id"],
                     "problem_name": all_full_question["problem_name"],
                     "solution_id": all_full_question["solution_id"],
-                    "error_log": error_content,
-                    "time_curve_has_a_peak": time_peak,
-                    "space_curve_has_a_peak": space_peak,
+                    "error_log": str(error_content)[:10000],
+                    "time_curve_has_a_peak": bool(time_peak),
+                    "space_curve_has_a_peak": bool(space_peak),
                 }
             )
 
