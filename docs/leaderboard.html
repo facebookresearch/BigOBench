@@ -634,7 +634,20 @@
       // headers
       headers.forEach(function (header) {
         var th = document.createElement("th");
-        th.textContent = header;
+        if (complexityTask != "ranking"){
+          if (header == "all@1") {
+            th.textContent = header + " (sorting)";
+          } else {
+            th.textContent = header;
+          }
+        } else {
+          if (header == "coeffFull") {
+            th.textContent = header + " (sorting)";
+          } else {
+            th.textContent = header;
+          }
+        }
+        
         headerRow.appendChild(th);
       });
       thead.appendChild(headerRow);
