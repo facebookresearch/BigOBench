@@ -496,7 +496,7 @@
             },
             "ranking": {
                 "coeffFull": 33.7,
-                "coeffIntersect": "",
+                "coeffIntersect": 65.8,
                 "all@1": 6.5
             }
         },
@@ -514,7 +514,7 @@
             },
             "ranking": {
                 "coeffFull": 39.7,
-                "coeffIntersect": "",
+                "coeffIntersect": 78.6,
                 "all@1": 3.1
             }
         }
@@ -536,7 +536,7 @@
             },
             "ranking": {
                 "coeffFull": 50.4,
-                "coeffIntersect": "",
+                "coeffIntersect": 81.6,
                 "all@1": 8.3
             }
         },
@@ -554,7 +554,7 @@
             },
             "ranking": {
                 "coeffFull": 41.1,
-                "coeffIntersect": "",
+                "coeffIntersect": 87.9,
                 "all@1": 3.3
             }
         }
@@ -576,7 +576,7 @@
             },
             "ranking": {
                 "coeffFull": 10.4,
-                "coeffIntersect": "",
+                "coeffIntersect": 32.8,
                 "all@1": 1.6
             }
         },
@@ -594,7 +594,7 @@
             },
             "ranking": {
                 "coeffFull": 17.5,
-                "coeffIntersect": "",
+                "coeffIntersect": 55.2,
                 "all@1": 1.4
             }
         }
