@@ -598,5 +598,125 @@
                 "all@1": 1.4
             }
         }
+    },
+    "Llama 3.1 Nemotron-Ultra 253B": {
+        "link": "https://huggingface.co/nvidia/Llama-3_1-Nemotron-Ultra-253B-v1",
+        "size": 253,
+        "time": {
+            "prediction": {
+                "pass@1": 63.1,
+                "best@1": 74.5,
+                "all@1": 41.1
+            },
+            "generation": {
+                "pass@1": 33.5,
+                "pass@10": 54.9,
+                "best@1": 51.8,
+                "all@1": 6.1
+            },
+            "ranking": {
+                "coeffFull": 41.6,
+                "coeffIntersect": "",
+                "all@1": 5.1
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 45.2,
+                "best@1": 54.7,
+                "all@1": 10.3
+            },
+            "generation": {
+                "pass@1": 30.4,
+                "pass@10": 55.5,
+                "best@1": 45.3,
+                "all@1": 5.6
+            },
+            "ranking": {
+                "coeffFull": 45.4,
+                "coeffIntersect": "",
+                "all@1": 4.6
+            }
+        }
+    },
+    "DeepCoder Preview 14B": {
+        "link": "https://huggingface.co/agentica-org/DeepCoder-14B-Preview",
+        "size": 14,
+        "time": {
+            "prediction": {
+                "pass@1": 53.4,
+                "best@1": 63.9,
+                "all@1": 32.3
+            },
+            "generation": {
+                "pass@1": 10.2,
+                "pass@10": 19.7,
+                "best@1": 16.8,
+                "all@1": 0.8
+            },
+            "ranking": {
+                "coeffFull": 15.4,
+                "coeffIntersect": "",
+                "all@1": 0.5
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 38.0,
+                "best@1": 49.7,
+                "all@1": 6.3
+            },
+            "generation": {
+                "pass@1": 8.6,
+                "pass@10": 18.0,
+                "best@1": 14.8,
+                "all@1": 0.3
+            },
+            "ranking": {
+                "coeffFull": 15.4,
+                "coeffIntersect": "",
+                "all@1": 0.3
+            }
+        }
+    },
+    "OpenHands LM v0.1 32B": {
+        "link": "https://huggingface.co/all-hands/openhands-lm-32b-v0.1",
+        "size": 32,
+        "time": {
+            "prediction": {
+                "pass@1": 59.3,
+                "best@1": 70.6,
+                "all@1": 36.0
+            },
+            "generation": {
+                "pass@1": 11.1,
+                "pass@10": 28.6,
+                "best@1": 14.6,
+                "all@1": 2.0
+            },
+            "ranking": {
+                "coeffFull": 23.2,
+                "coeffIntersect": "",
+                "all@1": 1.3
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.4,
+                "best@1": 62.2,
+                "all@1": 12.4
+            },
+            "generation": {
+                "pass@1": 10.4,
+                "pass@10": 27.5,
+                "best@1": 16.9,
+                "all@1": 0.9
+            },
+            "ranking": {
+                "coeffFull": 22.4,
+                "coeffIntersect": "",
+                "all@1": 0.6
+            }
+        }
     }
 }
