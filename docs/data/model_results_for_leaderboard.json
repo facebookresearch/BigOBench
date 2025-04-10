@@ -639,7 +639,7 @@
             }
         }
     },
-    "DeepCoder Preview 14B": {
+    "DeepCoder Preview* 14B": {
         "link": "https://huggingface.co/agentica-org/DeepCoder-14B-Preview",
         "size": 14,
         "time": {
