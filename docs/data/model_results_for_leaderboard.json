@@ -718,5 +718,85 @@
                 "all@1": 0.6
             }
         }
+    },
+    "Llama 4 Scout 17Bx16E": {
+        "link": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct",
+        "size": 17,
+        "time": {
+            "prediction": {
+                "pass@1": 48.7,
+                "best@1": 66.3,
+                "all@1": 23.0
+            },
+            "generation": {
+                "pass@1": 22.8,
+                "pass@10": 48.0,
+                "best@1": 31.8,
+                "all@1": 3.5
+            },
+            "ranking": {
+                "coeffFull": 39.0,
+                "coeffIntersect": "",
+                "all@1": 3.4
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 37.4,
+                "best@1": 58.8,
+                "all@1": 5.2
+            },
+            "generation": {
+                "pass@1": 20.0,
+                "pass@10": 40.1,
+                "best@1": 31.1,
+                "all@1": 2.2
+            },
+            "ranking": {
+                "coeffFull": 34.5,
+                "coeffIntersect": "",
+                "all@1": 2.1
+            }
+        }
+    },
+    "Llama 4 Maverick FP8 17Bx128E": {
+        "link": "https://huggingface.co/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+        "size": 17,
+        "time": {
+            "prediction": {
+                "pass@1": 57.4,
+                "best@1": 70.8,
+                "all@1": 32.8
+            },
+            "generation": {
+                "pass@1": 19.9,
+                "pass@10": 44.6,
+                "best@1": 27.0,
+                "all@1": 5.3
+            },
+            "ranking": {
+                "coeffFull": 43.2,
+                "coeffIntersect": "",
+                "all@1": 3.6
+            }
+        },
+        "space": {
+            "prediction": {
+                "pass@1": 44.6,
+                "best@1": 54.5,
+                "all@1": 8.9
+            },
+            "generation": {
+                "pass@1": 16.8,
+                "pass@10": 28.2,
+                "best@1": 30.4,
+                "all@1": 0.8
+            },
+            "ranking": {
+                "coeffFull": 21.8,
+                "coeffIntersect": "",
+                "all@1": 0.8
+            }
+        }
     }
 }
