@@ -300,7 +300,7 @@ We provide scripts that can be run in local, or via SLURM allocated machines, so
 
 As a quick overview on how to run the evaluation:
 
-1. Direcly go into `src/eval`, where the evaluation harness can call the OpenAI API to answer all the questions of the benchmark.
+1. Directly go into `src/eval`, where the evaluation harness can call the OpenAI API to answer all the questions of the benchmark.
 
 2. Based on `src/complexity`, the complexity framework can evaluate that OpenAI-generated solutions do respect the complexity requirement (for time/space complexity generation and ranking tasks, whereas time/space prediction tasks do not need this step).
 
